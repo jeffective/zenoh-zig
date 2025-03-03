@@ -1,0 +1,22 @@
+.{
+    .name = .zenoh,
+    .version = "0.0.0",
+    .dependencies = .{
+        .build_crab = .{
+            .url = "git+https://github.com/kj4tmp/build.crab.git#cfcf44e5b757ce383cb262ab85173afb973367ed",
+            .hash = "build_crab-0.1.7-V2z3N_KLAAADNMQPNyT85Q2JdpqNahpRdfqaxtW6u7aT",
+        },
+        .zenoh_c_source = .{
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/archive/refs/tags/1.2.1.tar.gz",
+            .hash = "N-V-__8AAKquGwAFCBDSdo0QPY8DMYlO5SUSKk6rOttMSy7I",
+        },
+    },
+    .fingerprint = 0x9afd706a63cc3640, // Changing this has security and trust implications.
+    .minimum_zig_version = "0.14.0-dev.3445+6c3cbb0c8",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "LICENSE",
+    },
+}
