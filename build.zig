@@ -1,7 +1,5 @@
 const std = @import("std");
 
-const build_crab = @import("build_crab");
-
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
@@ -11,37 +9,55 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const zenoh_c_dep = switch (target.result.cpu.arch) {
+        .x86_64 => switch (target.result.os.tag) {
+            .windows => switch (target.result.abi) {
+                .gnu => b.dependency("zenoh_c_x86_64_windows_gnu", .{}),
+                .msvc => b.dependency("zenoh_c_x86_64_windows_msvc", .{}),
+                else => @panic("unsupported target"),
+            },
+            .linux => switch (target.result.abi) {
+                .musl => b.dependency("zenoh_c_x86_64_linux_musl", .{}),
+                .gnu => b.dependency("zenoh_c_x86_64_linux_gnu", .{}),
+                else => @panic("unsupported target"),
+            },
+            .macos => switch (target.result.abi) {
+                .none => b.dependency("zenoh_c_x86_64_macos_none", .{}),
+                else => @panic("unsupported target"),
+            },
+            else => @panic("unsupported target"),
+        },
+        .aarch64 => switch (target.result.os.tag) {
+            .linux => switch (target.result.abi) {
+                .musl => b.dependency("zenoh_c_aarch64_linux_musl", .{}),
+                .gnu => b.dependency("zenoh_c_aarch64_linux_gnu", .{}),
+                else => @panic("unsupported target"),
+            },
+            .macos => switch (target.result.abi) {
+                .none => b.dependency("zenoh_c_aarch64_macos_none", .{}),
+                else => @panic("unsupported target"),
+            },
+            else => @panic("unsupported target"),
+        },
+        else => @panic("unsupported target"),
+    };
+
+    const zenoh_c_static_lib_path = switch (target.result.os.tag) {
+        .linux, .macos => zenoh_c_dep.path("lib/libzenohc.a"),
+        .windows => zenoh_c_dep.path("lib/libzenohc.lib"),
+        else => @panic("unsupported target"),
+    };
+
+    lib_mod.addObjectFile(zenoh_c_static_lib_path);
+    lib_mod.addIncludePath(zenoh_c_dep.path("include"));
+
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
     const lib_unit_tests = b.addTest(.{
         .root_module = lib_mod,
     });
-
+    lib_unit_tests.linkLibCpp();
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
-
-    const zenoh_c_source = b.dependency("zenoh_c_source", .{ .target = target, .optimize = optimize });
-
-    const crate_lib_path: std.Build.LazyPath = build_crab.addRustStaticlib(
-        b,
-        .{
-            .name = "libzenohc.so",
-            .manifest_path = zenoh_c_source.path("Cargo.toml"),
-        },
-        .{
-            .target = target,
-            .optimize = optimize,
-        },
-    );
-
-    // const zenoh_c_artifacts = build_crab.addCargoBuild(
-    //     b,
-    //     .{
-    //         .manifest_path = zenoh_c_source.path("Cargo.toml"),
-    //     },
-    //     .{},
-    // );
-
-    lib_mod.addObjectFile(crate_lib_path);
 }
