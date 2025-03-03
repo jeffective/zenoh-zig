@@ -3,7 +3,7 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const lib_mod = b.createModule(.{
+    const zenoh = b.createModule(.{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
@@ -48,16 +48,17 @@ pub fn build(b: *std.Build) void {
         else => @panic("unsupported target"),
     };
 
-    lib_mod.addObjectFile(zenoh_c_static_lib_path);
-    lib_mod.addIncludePath(zenoh_c_dep.path("include"));
+    zenoh.addObjectFile(zenoh_c_static_lib_path);
+    zenoh.addIncludePath(zenoh_c_dep.path("include"));
 
-    // Creates a step for unit testing. This only builds the test executable
-    // but does not run it.
     const lib_unit_tests = b.addTest(.{
-        .root_module = lib_mod,
+        .root_module = zenoh,
     });
     lib_unit_tests.linkLibCpp();
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
+
+    // default step
+    b.default_step.dependOn(test_step);
 }
