@@ -1,5 +1,7 @@
 # zenoh-zig
 
+![Tests](https://github.com/kj4tmp/zenoh-zig/actions/workflows/main.yml/badge.svg)
+
 This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zenoh/zenoh-c).
 
 The project has no affiliation to with the official Zenoh project.
