@@ -7,36 +7,44 @@
         .zenoh_c_aarch64_linux_musl = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-aarch64-unknown-linux-musl-standalone.zip",
             .hash = "N-V-__8AAOokVgO0AcAYT3WdXB_sFWghwdMVE1Z291qyaMwo",
+            .lazy = true,
         },
         .zenoh_c_x86_64_linux_musl = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-x86_64-unknown-linux-musl-standalone.zip",
             .hash = "N-V-__8AAON7RAPy6inzZoTLfrfM3qGOKhd6eyUPC_Kbw4A-",
+            .lazy = true,
         },
         .zenoh_c_aarch64_linux_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-aarch64-unknown-linux-gnu-standalone.zip",
             .hash = "N-V-__8AANDAegNVrxYqMADyiBUfo_EI-3CzAiLM-czQ7BZM",
+            .lazy = true,
         },
         .zenoh_c_x86_64_linux_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-x86_64-unknown-linux-gnu-standalone.zip",
             .hash = "N-V-__8AACUOjgMMalZq-rCJblTIgoqNKa_hFtph76nDBN1D",
+            .lazy = true,
         },
         // windows
         .zenoh_c_x86_64_windows_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-x86_64-pc-windows-gnu-standalone.zip",
             .hash = "N-V-__8AAOa-oAKhmKFDIrJU0MUdobrikyeUbFne6nbGYHlg",
+            .lazy = true,
         },
         .zenoh_c_x86_64_windows_msvc = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-x86_64-pc-windows-msvc-standalone.zip",
             .hash = "N-V-__8AAGaRNwKiaiEEwbjc6ro8FQQOB74sN5uJzkiRg7iR",
+            .lazy = true,
         },
         // macos
         .zenoh_c_aarch64_macos_none = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-aarch64-apple-darwin-standalone.zip",
             .hash = "N-V-__8AAPl_DwJ_CTIyx3fqzDbACK6lAIHEzA0MOu4oWYzR",
+            .lazy = true,
         },
         .zenoh_c_x86_64_macos_none = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.2.1/zenoh-c-1.2.1-x86_64-apple-darwin-standalone.zip",
             .hash = "N-V-__8AACD4KgJzEvAkf4M8YcDrmb5pvDQiVnNRY-S1BdbV",
+            .lazy = true,
         },
     },
     .fingerprint = 0x9afd706a63cc3640, // Changing this has security and trust implications.

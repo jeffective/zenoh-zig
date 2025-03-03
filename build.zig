@@ -12,35 +12,35 @@ pub fn build(b: *std.Build) void {
     const zenoh_c_dep = switch (target.result.cpu.arch) {
         .x86_64 => switch (target.result.os.tag) {
             .windows => switch (target.result.abi) {
-                .gnu => b.dependency("zenoh_c_x86_64_windows_gnu", .{}),
-                .msvc => b.dependency("zenoh_c_x86_64_windows_msvc", .{}),
+                .gnu => b.lazyDependency("zenoh_c_x86_64_windows_gnu", .{}),
+                .msvc => b.lazyDependency("zenoh_c_x86_64_windows_msvc", .{}),
                 else => @panic("unsupported target"),
             },
             .linux => switch (target.result.abi) {
-                .musl => b.dependency("zenoh_c_x86_64_linux_musl", .{}),
-                .gnu => b.dependency("zenoh_c_x86_64_linux_gnu", .{}),
+                .musl => b.lazyDependency("zenoh_c_x86_64_linux_musl", .{}),
+                .gnu => b.lazyDependency("zenoh_c_x86_64_linux_gnu", .{}),
                 else => @panic("unsupported target"),
             },
             .macos => switch (target.result.abi) {
-                .none => b.dependency("zenoh_c_x86_64_macos_none", .{}),
+                .none => b.lazyDependency("zenoh_c_x86_64_macos_none", .{}),
                 else => @panic("unsupported target"),
             },
             else => @panic("unsupported target"),
         },
         .aarch64 => switch (target.result.os.tag) {
             .linux => switch (target.result.abi) {
-                .musl => b.dependency("zenoh_c_aarch64_linux_musl", .{}),
-                .gnu => b.dependency("zenoh_c_aarch64_linux_gnu", .{}),
+                .musl => b.lazyDependency("zenoh_c_aarch64_linux_musl", .{}),
+                .gnu => b.lazyDependency("zenoh_c_aarch64_linux_gnu", .{}),
                 else => @panic("unsupported target"),
             },
             .macos => switch (target.result.abi) {
-                .none => b.dependency("zenoh_c_aarch64_macos_none", .{}),
+                .none => b.lazyDependency("zenoh_c_aarch64_macos_none", .{}),
                 else => @panic("unsupported target"),
             },
             else => @panic("unsupported target"),
         },
         else => @panic("unsupported target"),
-    };
+    } orelse return;
 
     const zenoh_c_static_lib_path = switch (target.result.os.tag) {
         .linux, .macos => zenoh_c_dep.path("lib/libzenohc.a"),
