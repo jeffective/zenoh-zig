@@ -59,6 +59,16 @@ pub fn build(b: *std.Build) void {
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
 
+    // examples
+    const examples_tests = b.addTest(.{
+        .root_source_file = b.path("examples/examples.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    examples_tests.root_module.addImport("zenoh", zenoh);
+    const run_examples_tests = b.addRunArtifact(examples_tests);
+
     // default step
     b.default_step.dependOn(test_step);
+    b.default_step.dependOn(&run_examples_tests.step);
 }
