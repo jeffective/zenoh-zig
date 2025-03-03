@@ -3,7 +3,7 @@
 ![Tests](https://github.com/kj4tmp/zenoh-zig/actions/workflows/main.yml/badge.svg)
 
 > [!WARNING]
-> This project has no affiliation to with the official Zenoh project.
+> This project has no affiliation with the official Zenoh project.
 
 This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zenoh/zenoh-c).
 
