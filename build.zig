@@ -61,7 +61,7 @@ pub fn build(b: *std.Build) void {
 
     // examples
     const examples_tests = b.addTest(.{
-        .root_source_file = b.path("examples/examples.zig"),
+        .root_source_file = b.path("examples/root.zig"),
         .target = target,
         .optimize = optimize,
     });
