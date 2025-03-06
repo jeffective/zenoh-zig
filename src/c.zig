@@ -20,32 +20,26 @@ pub const ZC_BUF_LAYOUT_ALLOC_STATUS_ALLOC_ERROR: c_int = 1;
 pub const ZC_BUF_LAYOUT_ALLOC_STATUS_LAYOUT_ERROR: c_int = 2;
 pub const enum_zc_buf_layout_alloc_status_t = c_uint;
 pub const zc_buf_layout_alloc_status_t = enum_zc_buf_layout_alloc_status_t;
-pub const struct_z_owned_shm_mut_t = extern struct {
+pub const OwnedShmMut = extern struct {
     _0: [32]u8 = @import("std").mem.zeroes([32]u8),
 };
-pub const z_owned_shm_mut_t = struct_z_owned_shm_mut_t;
-pub const struct_z_buf_alloc_result_t = extern struct {
+pub const BufAllocResult = extern struct {
     status: enum_zc_buf_alloc_status_t = @import("std").mem.zeroes(enum_zc_buf_alloc_status_t),
-    buf: struct_z_owned_shm_mut_t = @import("std").mem.zeroes(struct_z_owned_shm_mut_t),
+    buf: OwnedShmMut = @import("std").mem.zeroes(OwnedShmMut),
     @"error": enum_z_alloc_error_t = @import("std").mem.zeroes(enum_z_alloc_error_t),
 };
-pub const z_buf_alloc_result_t = struct_z_buf_alloc_result_t;
-pub const struct_z_loaned_alloc_layout_t = extern struct {
+pub const LoanedAllocLayout = extern struct {
     _0: [40]u8 = @import("std").mem.zeroes([40]u8),
 };
-pub const z_loaned_alloc_layout_t = struct_z_loaned_alloc_layout_t;
-pub const struct_z_owned_alloc_layout_t = extern struct {
+pub const OwnedAllocLayout = extern struct {
     _0: [40]u8 = @import("std").mem.zeroes([40]u8),
 };
-pub const z_owned_alloc_layout_t = struct_z_owned_alloc_layout_t;
-pub const struct_z_loaned_shm_provider_t = extern struct {
+pub const LoanedShmProvider = extern struct {
     _0: [240]u8 = @import("std").mem.zeroes([240]u8),
 };
-pub const z_loaned_shm_provider_t = struct_z_loaned_shm_provider_t;
-pub const struct_z_alloc_alignment_t = extern struct {
+pub const AllocAlignment = extern struct {
     pow: u8 = @import("std").mem.zeroes(u8),
 };
-pub const z_alloc_alignment_t = struct_z_alloc_alignment_t;
 pub const struct_zc_threadsafe_context_data_t = extern struct {
     ptr: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
 };
@@ -58,22 +52,18 @@ pub const zc_threadsafe_context_t = struct_zc_threadsafe_context_t;
 pub const LoanedBytes = extern struct {
     _0: [40]u8 = @import("std").mem.zeroes([40]u8),
 };
-pub const struct_z_loaned_shm_t = extern struct {
+pub const LoanedShm = extern struct {
     _0: [32]u8 = @import("std").mem.zeroes([32]u8),
 };
-pub const z_loaned_shm_t = struct_z_loaned_shm_t;
-pub const struct_z_owned_bytes_t = extern struct {
+pub const OwnedBytes = extern struct {
     _0: [40]u8 = @import("std").mem.zeroes([40]u8),
 };
-pub const z_owned_bytes_t = struct_z_owned_bytes_t;
-pub const struct_z_loaned_slice_t = extern struct {
+pub const LoanedSlice = extern struct {
     _0: [32]u8 = @import("std").mem.zeroes([32]u8),
 };
-pub const z_loaned_slice_t = struct_z_loaned_slice_t;
-pub const struct_z_loaned_string_t = extern struct {
+pub const LoanedString = extern struct {
     _0: [32]u8 = @import("std").mem.zeroes([32]u8),
 };
-pub const z_loaned_string_t = struct_z_loaned_string_t;
 pub const struct_z_owned_shm_t = extern struct {
     _0: [32]u8 = @import("std").mem.zeroes([32]u8),
 };
@@ -400,7 +390,7 @@ pub const struct_z_loaned_shm_mut_t = extern struct {
 pub const z_loaned_shm_mut_t = struct_z_loaned_shm_mut_t;
 pub const struct_z_buf_layout_alloc_result_t = extern struct {
     status: enum_zc_buf_layout_alloc_status_t = @import("std").mem.zeroes(enum_zc_buf_layout_alloc_status_t),
-    buf: struct_z_owned_shm_mut_t = @import("std").mem.zeroes(struct_z_owned_shm_mut_t),
+    buf: OwnedShmMut = @import("std").mem.zeroes(OwnedShmMut),
     alloc_error: enum_z_alloc_error_t = @import("std").mem.zeroes(enum_z_alloc_error_t),
     layout_error: enum_z_layout_error_t = @import("std").mem.zeroes(enum_z_layout_error_t),
 };
@@ -547,12 +537,12 @@ pub const ZC_REPLY_KEYEXPR_MATCHING_QUERY: c_int = 1;
 pub const enum_zc_reply_keyexpr_t = c_uint;
 pub const zc_reply_keyexpr_t = enum_zc_reply_keyexpr_t;
 pub const struct_z_moved_alloc_layout_t = extern struct {
-    _this: struct_z_owned_alloc_layout_t = @import("std").mem.zeroes(struct_z_owned_alloc_layout_t),
+    _this: OwnedAllocLayout = @import("std").mem.zeroes(OwnedAllocLayout),
 };
 pub const z_moved_alloc_layout_t = struct_z_moved_alloc_layout_t;
 pub const z_result_t = i8;
 pub const struct_z_moved_bytes_t = extern struct {
-    _this: struct_z_owned_bytes_t = @import("std").mem.zeroes(struct_z_owned_bytes_t),
+    _this: OwnedBytes = @import("std").mem.zeroes(OwnedBytes),
 };
 pub const z_moved_bytes_t = struct_z_moved_bytes_t;
 pub const struct_z_moved_shm_t = extern struct {
@@ -560,7 +550,7 @@ pub const struct_z_moved_shm_t = extern struct {
 };
 pub const z_moved_shm_t = struct_z_moved_shm_t;
 pub const struct_z_moved_shm_mut_t = extern struct {
-    _this: struct_z_owned_shm_mut_t = @import("std").mem.zeroes(struct_z_owned_shm_mut_t),
+    _this: OwnedShmMut = @import("std").mem.zeroes(OwnedShmMut),
 };
 pub const z_moved_shm_mut_t = struct_z_moved_shm_mut_t;
 pub const struct_z_moved_slice_t = extern struct {
@@ -918,7 +908,7 @@ pub const struct_z_time_t = extern struct {
 pub const z_time_t = struct_z_time_t;
 pub const struct_zc_owned_closure_log_t = extern struct {
     _context: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    _call: ?*const fn (enum_zc_log_severity_t, [*c]const struct_z_loaned_string_t, ?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn (enum_zc_log_severity_t, [*c]const struct_z_loaned_string_t, ?*anyopaque) callconv(.c) void),
+    _call: ?*const fn (enum_zc_log_severity_t, [*c]const LoanedString, ?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn (enum_zc_log_severity_t, [*c]const LoanedString, ?*anyopaque) callconv(.c) void),
     _drop: ?*const fn (?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn (?*anyopaque) callconv(.c) void),
 };
 pub const zc_owned_closure_log_t = struct_zc_owned_closure_log_t;
@@ -1079,39 +1069,39 @@ pub extern var Z_CONFIG_SCOUTING_DELAY_KEY: [*c]const u8;
 pub extern var Z_CONFIG_ADD_TIMESTAMP_KEY: [*c]const u8;
 pub extern var Z_CONFIG_SHARED_MEMORY_KEY: [*c]const u8;
 pub extern const Z_SHM_POSIX_PROTOCOL_ID: c_uint;
-pub extern fn z_alloc_layout_alloc(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t) void;
-pub extern fn z_alloc_layout_alloc_gc(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t) void;
-pub extern fn z_alloc_layout_alloc_gc_defrag(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t) void;
-pub extern fn z_alloc_layout_alloc_gc_defrag_blocking(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t) void;
-pub extern fn z_alloc_layout_alloc_gc_defrag_dealloc(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t) void;
+pub extern fn z_alloc_layout_alloc(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout) void;
+pub extern fn z_alloc_layout_alloc_gc(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout) void;
+pub extern fn z_alloc_layout_alloc_gc_defrag(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout) void;
+pub extern fn z_alloc_layout_alloc_gc_defrag_blocking(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout) void;
+pub extern fn z_alloc_layout_alloc_gc_defrag_dealloc(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout) void;
 pub extern fn z_alloc_layout_drop(this_: [*c]struct_z_moved_alloc_layout_t) void;
-pub extern fn z_alloc_layout_loan(this_: [*c]const struct_z_owned_alloc_layout_t) [*c]const struct_z_loaned_alloc_layout_t;
-pub extern fn z_alloc_layout_new(this_: [*c]struct_z_owned_alloc_layout_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) z_result_t;
-pub extern fn z_alloc_layout_threadsafe_alloc_gc_defrag_async(out_result: [*c]struct_z_buf_alloc_result_t, layout: [*c]const struct_z_loaned_alloc_layout_t, result_context: struct_zc_threadsafe_context_t, result_callback: ?*const fn (?*anyopaque, [*c]struct_z_buf_alloc_result_t) callconv(.c) void) z_result_t;
-pub extern fn z_bytes_as_loaned_shm(this_: [*c]const LoanedBytes, dst: [*c][*c]const struct_z_loaned_shm_t) z_result_t;
-pub extern fn z_bytes_as_mut_loaned_shm(this_: [*c]LoanedBytes, dst: [*c][*c]struct_z_loaned_shm_t) z_result_t;
-pub extern fn z_bytes_clone(dst: [*c]struct_z_owned_bytes_t, this_: [*c]const LoanedBytes) void;
-pub extern fn z_bytes_copy_from_buf(this_: [*c]struct_z_owned_bytes_t, data: [*c]const u8, len: usize) z_result_t;
-pub extern fn z_bytes_copy_from_slice(this_: [*c]struct_z_owned_bytes_t, slice: [*c]const struct_z_loaned_slice_t) void;
-pub extern fn z_bytes_copy_from_str(this_: [*c]struct_z_owned_bytes_t, str: [*c]const u8) z_result_t;
-pub extern fn z_bytes_copy_from_string(this_: [*c]struct_z_owned_bytes_t, str: [*c]const struct_z_loaned_string_t) void;
+pub extern fn z_alloc_layout_loan(this_: [*c]const OwnedAllocLayout) [*c]const LoanedAllocLayout;
+pub extern fn z_alloc_layout_new(this_: [*c]OwnedAllocLayout, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) z_result_t;
+pub extern fn z_alloc_layout_threadsafe_alloc_gc_defrag_async(out_result: [*c]BufAllocResult, layout: [*c]const LoanedAllocLayout, result_context: struct_zc_threadsafe_context_t, result_callback: ?*const fn (?*anyopaque, [*c]BufAllocResult) callconv(.c) void) z_result_t;
+pub extern fn z_bytes_as_loaned_shm(this_: [*c]const LoanedBytes, dst: [*c][*c]const LoanedShm) z_result_t;
+pub extern fn z_bytes_as_mut_loaned_shm(this_: [*c]LoanedBytes, dst: [*c][*c]LoanedShm) z_result_t;
+pub extern fn z_bytes_clone(dst: [*c]OwnedBytes, this_: [*c]const LoanedBytes) void;
+pub extern fn z_bytes_copy_from_buf(this_: [*c]OwnedBytes, data: [*c]const u8, len: usize) z_result_t;
+pub extern fn z_bytes_copy_from_slice(this_: [*c]OwnedBytes, slice: [*c]const LoanedSlice) void;
+pub extern fn z_bytes_copy_from_str(this_: [*c]OwnedBytes, str: [*c]const u8) z_result_t;
+pub extern fn z_bytes_copy_from_string(this_: [*c]OwnedBytes, str: [*c]const LoanedString) void;
 pub extern fn z_bytes_drop(this_: [*c]struct_z_moved_bytes_t) void;
-pub extern fn z_bytes_empty(this_: [*c]struct_z_owned_bytes_t) void;
-pub extern fn z_bytes_from_buf(this_: [*c]struct_z_owned_bytes_t, data: [*c]u8, len: usize, deleter: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
-pub extern fn z_bytes_from_shm(this_: [*c]struct_z_owned_bytes_t, shm: [*c]struct_z_moved_shm_t) z_result_t;
-pub extern fn z_bytes_from_shm_mut(this_: [*c]struct_z_owned_bytes_t, shm: [*c]struct_z_moved_shm_mut_t) z_result_t;
-pub extern fn z_bytes_from_slice(this_: [*c]struct_z_owned_bytes_t, slice: [*c]struct_z_moved_slice_t) void;
-pub extern fn z_bytes_from_static_buf(this_: [*c]struct_z_owned_bytes_t, data: [*c]u8, len: usize) z_result_t;
-pub extern fn z_bytes_from_static_str(this_: [*c]struct_z_owned_bytes_t, str: [*c]const u8) z_result_t;
-pub extern fn z_bytes_from_str(this_: [*c]struct_z_owned_bytes_t, str: [*c]u8, deleter: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
-pub extern fn z_bytes_from_string(this_: [*c]struct_z_owned_bytes_t, s: [*c]struct_z_moved_string_t) void;
+pub extern fn z_bytes_empty(this_: [*c]OwnedBytes) void;
+pub extern fn z_bytes_from_buf(this_: [*c]OwnedBytes, data: [*c]u8, len: usize, deleter: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
+pub extern fn z_bytes_from_shm(this_: [*c]OwnedBytes, shm: [*c]struct_z_moved_shm_t) z_result_t;
+pub extern fn z_bytes_from_shm_mut(this_: [*c]OwnedBytes, shm: [*c]struct_z_moved_shm_mut_t) z_result_t;
+pub extern fn z_bytes_from_slice(this_: [*c]OwnedBytes, slice: [*c]struct_z_moved_slice_t) void;
+pub extern fn z_bytes_from_static_buf(this_: [*c]OwnedBytes, data: [*c]u8, len: usize) z_result_t;
+pub extern fn z_bytes_from_static_str(this_: [*c]OwnedBytes, str: [*c]const u8) z_result_t;
+pub extern fn z_bytes_from_str(this_: [*c]OwnedBytes, str: [*c]u8, deleter: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
+pub extern fn z_bytes_from_string(this_: [*c]OwnedBytes, s: [*c]struct_z_moved_string_t) void;
 pub extern fn z_bytes_get_contiguous_view(this_: [*c]const LoanedBytes, view: [*c]struct_z_view_slice_t) z_result_t;
 pub extern fn z_bytes_get_reader(data: [*c]const LoanedBytes) struct_z_bytes_reader_t;
 pub extern fn z_bytes_get_slice_iterator(this_: [*c]const LoanedBytes) struct_z_bytes_slice_iterator_t;
 pub extern fn z_bytes_is_empty(this_: [*c]const LoanedBytes) bool;
 pub extern fn z_bytes_len(this_: [*c]const LoanedBytes) usize;
-pub extern fn z_bytes_loan(this_: [*c]const struct_z_owned_bytes_t) [*c]const LoanedBytes;
-pub extern fn z_bytes_loan_mut(this_: [*c]struct_z_owned_bytes_t) [*c]LoanedBytes;
+pub extern fn z_bytes_loan(this_: [*c]const OwnedBytes) [*c]const LoanedBytes;
+pub extern fn z_bytes_loan_mut(this_: [*c]OwnedBytes) [*c]LoanedBytes;
 pub extern fn z_bytes_reader_read(this_: [*c]struct_z_bytes_reader_t, dst: [*c]u8, len: usize) usize;
 pub extern fn z_bytes_reader_remaining(this_: [*c]const struct_z_bytes_reader_t) usize;
 pub extern fn z_bytes_reader_seek(this_: [*c]struct_z_bytes_reader_t, offset: i64, origin: c_int) z_result_t;
@@ -1123,7 +1113,7 @@ pub extern fn z_bytes_to_string(this_: [*c]const LoanedBytes, dst: [*c]struct_z_
 pub extern fn z_bytes_writer_append(this_: [*c]struct_z_loaned_bytes_writer_t, bytes: [*c]struct_z_moved_bytes_t) z_result_t;
 pub extern fn z_bytes_writer_drop(this_: [*c]struct_z_moved_bytes_writer_t) void;
 pub extern fn z_bytes_writer_empty(this_: [*c]struct_z_owned_bytes_writer_t) z_result_t;
-pub extern fn z_bytes_writer_finish(this_: [*c]struct_z_moved_bytes_writer_t, bytes: [*c]struct_z_owned_bytes_t) void;
+pub extern fn z_bytes_writer_finish(this_: [*c]struct_z_moved_bytes_writer_t, bytes: [*c]OwnedBytes) void;
 pub extern fn z_bytes_writer_loan(this_: [*c]const struct_z_owned_bytes_writer_t) [*c]const struct_z_loaned_bytes_writer_t;
 pub extern fn z_bytes_writer_loan_mut(this_: [*c]struct_z_owned_bytes_writer_t) [*c]struct_z_loaned_bytes_writer_t;
 pub extern fn z_bytes_writer_write_all(this_: [*c]struct_z_loaned_bytes_writer_t, src: [*c]const u8, len: usize) z_result_t;
@@ -1278,10 +1268,10 @@ pub extern fn z_id_to_string(zid: [*c]const struct_z_id_t, dst: [*c]struct_z_own
 pub extern fn z_info_peers_zid(session: [*c]const struct_z_loaned_session_t, callback: [*c]struct_z_moved_closure_zid_t) z_result_t;
 pub extern fn z_info_routers_zid(session: [*c]const struct_z_loaned_session_t, callback: [*c]struct_z_moved_closure_zid_t) z_result_t;
 pub extern fn z_info_zid(session: [*c]const struct_z_loaned_session_t) struct_z_id_t;
-pub extern fn z_internal_alloc_layout_check(this_: [*c]const struct_z_owned_alloc_layout_t) bool;
-pub extern fn z_internal_alloc_layout_null(this_: [*c]struct_z_owned_alloc_layout_t) void;
-pub extern fn z_internal_bytes_check(this_: [*c]const struct_z_owned_bytes_t) bool;
-pub extern fn z_internal_bytes_null(this_: [*c]struct_z_owned_bytes_t) void;
+pub extern fn z_internal_alloc_layout_check(this_: [*c]const OwnedAllocLayout) bool;
+pub extern fn z_internal_alloc_layout_null(this_: [*c]OwnedAllocLayout) void;
+pub extern fn z_internal_bytes_check(this_: [*c]const OwnedBytes) bool;
+pub extern fn z_internal_bytes_null(this_: [*c]OwnedBytes) void;
 pub extern fn z_internal_bytes_writer_check(this_: [*c]const struct_z_owned_bytes_writer_t) bool;
 pub extern fn z_internal_bytes_writer_null(this_: [*c]struct_z_owned_bytes_writer_t) void;
 pub extern fn z_internal_chunk_alloc_result_check(this_: [*c]const struct_z_owned_chunk_alloc_result_t) bool;
@@ -1349,8 +1339,8 @@ pub extern fn z_internal_shm_client_check(this_: [*c]const struct_z_owned_shm_cl
 pub extern fn z_internal_shm_client_null(this_: [*c]struct_z_owned_shm_client_t) void;
 pub extern fn z_internal_shm_client_storage_check(this_: [*c]const struct_z_owned_shm_client_storage_t) bool;
 pub extern fn z_internal_shm_client_storage_null(this_: [*c]struct_z_owned_shm_client_storage_t) void;
-pub extern fn z_internal_shm_mut_check(this_: [*c]const struct_z_owned_shm_mut_t) bool;
-pub extern fn z_internal_shm_mut_null(this_: [*c]struct_z_owned_shm_mut_t) void;
+pub extern fn z_internal_shm_mut_check(this_: [*c]const OwnedShmMut) bool;
+pub extern fn z_internal_shm_mut_null(this_: [*c]OwnedShmMut) void;
 pub extern fn z_internal_shm_null(this_: [*c]struct_z_owned_shm_t) void;
 pub extern fn z_internal_shm_provider_check(this_: [*c]const struct_z_owned_shm_provider_t) bool;
 pub extern fn z_internal_shm_provider_null(this_: [*c]struct_z_owned_shm_provider_t) void;
@@ -1395,9 +1385,9 @@ pub extern fn z_liveliness_token_options_default(this_: [*c]struct_z_liveliness_
 pub extern fn z_liveliness_undeclare_token(this_: [*c]struct_z_moved_liveliness_token_t) z_result_t;
 pub extern fn z_matching_listener_drop(this_: [*c]struct_z_moved_matching_listener_t) void;
 pub extern fn z_memory_layout_drop(this_: [*c]struct_z_moved_memory_layout_t) void;
-pub extern fn z_memory_layout_get_data(this_: [*c]const struct_z_loaned_memory_layout_t, out_size: [*c]usize, out_alignment: [*c]struct_z_alloc_alignment_t) void;
+pub extern fn z_memory_layout_get_data(this_: [*c]const struct_z_loaned_memory_layout_t, out_size: [*c]usize, out_alignment: [*c]AllocAlignment) void;
 pub extern fn z_memory_layout_loan(this_: [*c]const struct_z_owned_memory_layout_t) [*c]const struct_z_loaned_memory_layout_t;
-pub extern fn z_memory_layout_new(this_: [*c]struct_z_owned_memory_layout_t, size: usize, alignment: struct_z_alloc_alignment_t) z_result_t;
+pub extern fn z_memory_layout_new(this_: [*c]struct_z_owned_memory_layout_t, size: usize, alignment: AllocAlignment) z_result_t;
 pub extern fn z_mutex_drop(this_: [*c]struct_z_moved_mutex_t) void;
 pub extern fn z_mutex_init(this_: [*c]struct_z_owned_mutex_t) z_result_t;
 pub extern fn z_mutex_loan_mut(this_: [*c]struct_z_owned_mutex_t) [*c]LoanedMutex;
@@ -1531,48 +1521,48 @@ pub extern fn z_shm_client_storage_drop(this_: [*c]struct_z_moved_shm_client_sto
 pub extern fn z_shm_client_storage_loan(this_: [*c]const struct_z_owned_shm_client_storage_t) [*c]const struct_z_loaned_shm_client_storage_t;
 pub extern fn z_shm_client_storage_new(this_: [*c]struct_z_owned_shm_client_storage_t, clients: [*c]const struct_zc_loaned_shm_client_list_t, add_default_client_set: bool) z_result_t;
 pub extern fn z_shm_client_storage_new_default(this_: [*c]struct_z_owned_shm_client_storage_t) void;
-pub extern fn z_shm_clone(out: [*c]struct_z_owned_shm_t, this_: [*c]const struct_z_loaned_shm_t) void;
-pub extern fn z_shm_data(this_: [*c]const struct_z_loaned_shm_t) [*c]const u8;
+pub extern fn z_shm_clone(out: [*c]struct_z_owned_shm_t, this_: [*c]const LoanedShm) void;
+pub extern fn z_shm_data(this_: [*c]const LoanedShm) [*c]const u8;
 pub extern fn z_shm_drop(this_: [*c]struct_z_moved_shm_t) void;
 pub extern fn z_shm_from_mut(this_: [*c]struct_z_owned_shm_t, that: [*c]struct_z_moved_shm_mut_t) void;
-pub extern fn z_shm_len(this_: [*c]const struct_z_loaned_shm_t) usize;
-pub extern fn z_shm_loan(this_: [*c]const struct_z_owned_shm_t) [*c]const struct_z_loaned_shm_t;
-pub extern fn z_shm_loan_mut(this_: [*c]struct_z_owned_shm_t) [*c]struct_z_loaned_shm_t;
+pub extern fn z_shm_len(this_: [*c]const LoanedShm) usize;
+pub extern fn z_shm_loan(this_: [*c]const struct_z_owned_shm_t) [*c]const LoanedShm;
+pub extern fn z_shm_loan_mut(this_: [*c]struct_z_owned_shm_t) [*c]LoanedShm;
 pub extern fn z_shm_mut_data(this_: [*c]const struct_z_loaned_shm_mut_t) [*c]const u8;
 pub extern fn z_shm_mut_data_mut(this_: [*c]struct_z_loaned_shm_mut_t) [*c]u8;
 pub extern fn z_shm_mut_drop(this_: [*c]struct_z_moved_shm_mut_t) void;
 pub extern fn z_shm_mut_len(this_: [*c]const struct_z_loaned_shm_mut_t) usize;
-pub extern fn z_shm_mut_loan(this_: [*c]const struct_z_owned_shm_mut_t) [*c]const struct_z_loaned_shm_mut_t;
-pub extern fn z_shm_mut_loan_mut(this_: [*c]struct_z_owned_shm_mut_t) [*c]struct_z_loaned_shm_mut_t;
-pub extern fn z_shm_mut_try_from_immut(this_: [*c]struct_z_owned_shm_mut_t, that: [*c]struct_z_moved_shm_t, immut: [*c]struct_z_owned_shm_t) z_result_t;
-pub extern fn z_shm_provider_alloc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) void;
-pub extern fn z_shm_provider_alloc_gc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) void;
-pub extern fn z_shm_provider_alloc_gc_defrag(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) void;
-pub extern fn z_shm_provider_alloc_gc_defrag_async(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t, result_context: struct_zc_threadsafe_context_t, result_callback: ?*const fn (?*anyopaque, [*c]struct_z_buf_layout_alloc_result_t) callconv(.c) void) z_result_t;
-pub extern fn z_shm_provider_alloc_gc_defrag_blocking(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) void;
-pub extern fn z_shm_provider_alloc_gc_defrag_dealloc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const struct_z_loaned_shm_provider_t, size: usize, alignment: struct_z_alloc_alignment_t) void;
-pub extern fn z_shm_provider_available(provider: [*c]const struct_z_loaned_shm_provider_t) usize;
-pub extern fn z_shm_provider_defragment(provider: [*c]const struct_z_loaned_shm_provider_t) usize;
+pub extern fn z_shm_mut_loan(this_: [*c]const OwnedShmMut) [*c]const struct_z_loaned_shm_mut_t;
+pub extern fn z_shm_mut_loan_mut(this_: [*c]OwnedShmMut) [*c]struct_z_loaned_shm_mut_t;
+pub extern fn z_shm_mut_try_from_immut(this_: [*c]OwnedShmMut, that: [*c]struct_z_moved_shm_t, immut: [*c]struct_z_owned_shm_t) z_result_t;
+pub extern fn z_shm_provider_alloc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) void;
+pub extern fn z_shm_provider_alloc_gc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) void;
+pub extern fn z_shm_provider_alloc_gc_defrag(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) void;
+pub extern fn z_shm_provider_alloc_gc_defrag_async(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment, result_context: struct_zc_threadsafe_context_t, result_callback: ?*const fn (?*anyopaque, [*c]struct_z_buf_layout_alloc_result_t) callconv(.c) void) z_result_t;
+pub extern fn z_shm_provider_alloc_gc_defrag_blocking(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) void;
+pub extern fn z_shm_provider_alloc_gc_defrag_dealloc(out_result: [*c]struct_z_buf_layout_alloc_result_t, provider: [*c]const LoanedShmProvider, size: usize, alignment: AllocAlignment) void;
+pub extern fn z_shm_provider_available(provider: [*c]const LoanedShmProvider) usize;
+pub extern fn z_shm_provider_defragment(provider: [*c]const LoanedShmProvider) usize;
 pub extern fn z_shm_provider_drop(this_: [*c]struct_z_moved_shm_provider_t) void;
-pub extern fn z_shm_provider_garbage_collect(provider: [*c]const struct_z_loaned_shm_provider_t) usize;
-pub extern fn z_shm_provider_loan(this_: [*c]const struct_z_owned_shm_provider_t) [*c]const struct_z_loaned_shm_provider_t;
-pub extern fn z_shm_provider_map(out_result: [*c]struct_z_owned_shm_mut_t, provider: [*c]const struct_z_loaned_shm_provider_t, allocated_chunk: struct_z_allocated_chunk_t, len: usize) z_result_t;
+pub extern fn z_shm_provider_garbage_collect(provider: [*c]const LoanedShmProvider) usize;
+pub extern fn z_shm_provider_loan(this_: [*c]const struct_z_owned_shm_provider_t) [*c]const LoanedShmProvider;
+pub extern fn z_shm_provider_map(out_result: [*c]OwnedShmMut, provider: [*c]const LoanedShmProvider, allocated_chunk: struct_z_allocated_chunk_t, len: usize) z_result_t;
 pub extern fn z_shm_provider_new(this_: [*c]struct_z_owned_shm_provider_t, id: z_protocol_id_t, context: struct_zc_context_t, callbacks: struct_zc_shm_provider_backend_callbacks_t) void;
 pub extern fn z_shm_provider_threadsafe_new(this_: [*c]struct_z_owned_shm_provider_t, id: z_protocol_id_t, context: struct_zc_threadsafe_context_t, callbacks: struct_zc_shm_provider_backend_callbacks_t) void;
 pub extern fn z_shm_try_mut(this_: [*c]struct_z_owned_shm_t) [*c]struct_z_loaned_shm_mut_t;
-pub extern fn z_shm_try_reloan_mut(this_: [*c]struct_z_loaned_shm_t) [*c]struct_z_loaned_shm_mut_t;
+pub extern fn z_shm_try_reloan_mut(this_: [*c]LoanedShm) [*c]struct_z_loaned_shm_mut_t;
 pub extern fn z_sleep_ms(time: usize) z_result_t;
 pub extern fn z_sleep_s(time: usize) z_result_t;
 pub extern fn z_sleep_us(time: usize) z_result_t;
-pub extern fn z_slice_clone(dst: [*c]struct_z_owned_slice_t, this_: [*c]const struct_z_loaned_slice_t) void;
+pub extern fn z_slice_clone(dst: [*c]struct_z_owned_slice_t, this_: [*c]const LoanedSlice) void;
 pub extern fn z_slice_copy_from_buf(this_: [*c]struct_z_owned_slice_t, start: [*c]const u8, len: usize) z_result_t;
-pub extern fn z_slice_data(this_: [*c]const struct_z_loaned_slice_t) [*c]const u8;
+pub extern fn z_slice_data(this_: [*c]const LoanedSlice) [*c]const u8;
 pub extern fn z_slice_drop(this_: [*c]struct_z_moved_slice_t) void;
 pub extern fn z_slice_empty(this_: [*c]struct_z_owned_slice_t) void;
 pub extern fn z_slice_from_buf(this_: [*c]struct_z_owned_slice_t, data: [*c]u8, len: usize, drop: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
-pub extern fn z_slice_is_empty(this_: [*c]const struct_z_loaned_slice_t) bool;
-pub extern fn z_slice_len(this_: [*c]const struct_z_loaned_slice_t) usize;
-pub extern fn z_slice_loan(this_: [*c]const struct_z_owned_slice_t) [*c]const struct_z_loaned_slice_t;
+pub extern fn z_slice_is_empty(this_: [*c]const LoanedSlice) bool;
+pub extern fn z_slice_len(this_: [*c]const LoanedSlice) usize;
+pub extern fn z_slice_loan(this_: [*c]const struct_z_owned_slice_t) [*c]const LoanedSlice;
 pub extern fn z_source_info_drop(this_: [*c]struct_z_moved_source_info_t) void;
 pub extern fn z_source_info_id(this_: [*c]const struct_z_loaned_source_info_t) struct_z_entity_global_id_t;
 pub extern fn z_source_info_loan(this_: [*c]const struct_z_owned_source_info_t) [*c]const struct_z_loaned_source_info_t;
@@ -1580,25 +1570,25 @@ pub extern fn z_source_info_new(this_: [*c]struct_z_owned_source_info_t, source_
 pub extern fn z_source_info_sn(this_: [*c]const struct_z_loaned_source_info_t) u32;
 pub extern fn z_string_array_clone(dst: [*c]struct_z_owned_string_array_t, this_: [*c]const struct_z_loaned_string_array_t) void;
 pub extern fn z_string_array_drop(this_: [*c]struct_z_moved_string_array_t) void;
-pub extern fn z_string_array_get(this_: [*c]const struct_z_loaned_string_array_t, index: usize) [*c]const struct_z_loaned_string_t;
+pub extern fn z_string_array_get(this_: [*c]const struct_z_loaned_string_array_t, index: usize) [*c]const LoanedString;
 pub extern fn z_string_array_is_empty(this_: [*c]const struct_z_loaned_string_array_t) bool;
 pub extern fn z_string_array_len(this_: [*c]const struct_z_loaned_string_array_t) usize;
 pub extern fn z_string_array_loan(this_: [*c]const struct_z_owned_string_array_t) [*c]const struct_z_loaned_string_array_t;
 pub extern fn z_string_array_loan_mut(this_: [*c]struct_z_owned_string_array_t) [*c]struct_z_loaned_string_array_t;
 pub extern fn z_string_array_new(this_: [*c]struct_z_owned_string_array_t) void;
-pub extern fn z_string_array_push_by_alias(this_: [*c]struct_z_loaned_string_array_t, value: [*c]const struct_z_loaned_string_t) usize;
-pub extern fn z_string_array_push_by_copy(this_: [*c]struct_z_loaned_string_array_t, value: [*c]const struct_z_loaned_string_t) usize;
-pub extern fn z_string_as_slice(this_: [*c]const struct_z_loaned_string_t) [*c]const struct_z_loaned_slice_t;
-pub extern fn z_string_clone(dst: [*c]struct_z_owned_string_t, this_: [*c]const struct_z_loaned_string_t) void;
+pub extern fn z_string_array_push_by_alias(this_: [*c]struct_z_loaned_string_array_t, value: [*c]const LoanedString) usize;
+pub extern fn z_string_array_push_by_copy(this_: [*c]struct_z_loaned_string_array_t, value: [*c]const LoanedString) usize;
+pub extern fn z_string_as_slice(this_: [*c]const LoanedString) [*c]const LoanedSlice;
+pub extern fn z_string_clone(dst: [*c]struct_z_owned_string_t, this_: [*c]const LoanedString) void;
 pub extern fn z_string_copy_from_str(this_: [*c]struct_z_owned_string_t, str: [*c]const u8) z_result_t;
 pub extern fn z_string_copy_from_substr(this_: [*c]struct_z_owned_string_t, str: [*c]const u8, len: usize) z_result_t;
-pub extern fn z_string_data(this_: [*c]const struct_z_loaned_string_t) [*c]const u8;
+pub extern fn z_string_data(this_: [*c]const LoanedString) [*c]const u8;
 pub extern fn z_string_drop(this_: [*c]struct_z_moved_string_t) void;
 pub extern fn z_string_empty(this_: [*c]struct_z_owned_string_t) void;
 pub extern fn z_string_from_str(this_: [*c]struct_z_owned_string_t, str: [*c]u8, drop: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.c) void, context: ?*anyopaque) z_result_t;
-pub extern fn z_string_is_empty(this_: [*c]const struct_z_loaned_string_t) bool;
-pub extern fn z_string_len(this_: [*c]const struct_z_loaned_string_t) usize;
-pub extern fn z_string_loan(this_: [*c]const struct_z_owned_string_t) [*c]const struct_z_loaned_string_t;
+pub extern fn z_string_is_empty(this_: [*c]const LoanedString) bool;
+pub extern fn z_string_len(this_: [*c]const LoanedString) usize;
+pub extern fn z_string_loan(this_: [*c]const struct_z_owned_string_t) [*c]const LoanedString;
 pub extern fn z_subscriber_drop(this_: [*c]struct_z_moved_subscriber_t) void;
 pub extern fn z_subscriber_id(subscriber: [*c]const struct_z_loaned_subscriber_t) struct_z_entity_global_id_t;
 pub extern fn z_subscriber_keyexpr(subscriber: [*c]const struct_z_loaned_subscriber_t) [*c]const struct_z_loaned_keyexpr_t;
@@ -1634,16 +1624,16 @@ pub extern fn z_view_keyexpr_loan(this_: [*c]const struct_z_view_keyexpr_t) [*c]
 pub extern fn z_view_slice_empty(this_: [*c]struct_z_view_slice_t) void;
 pub extern fn z_view_slice_from_buf(this_: [*c]struct_z_view_slice_t, start: [*c]const u8, len: usize) z_result_t;
 pub extern fn z_view_slice_is_empty(this_: [*c]const struct_z_view_slice_t) bool;
-pub extern fn z_view_slice_loan(this_: [*c]const struct_z_view_slice_t) [*c]const struct_z_loaned_slice_t;
+pub extern fn z_view_slice_loan(this_: [*c]const struct_z_view_slice_t) [*c]const LoanedSlice;
 pub extern fn z_view_string_empty(this_: [*c]struct_z_view_string_t) void;
 pub extern fn z_view_string_from_str(this_: [*c]struct_z_view_string_t, str: [*c]const u8) z_result_t;
 pub extern fn z_view_string_from_substr(this_: [*c]struct_z_view_string_t, str: [*c]const u8, len: usize) z_result_t;
 pub extern fn z_view_string_is_empty(this_: [*c]const struct_z_view_string_t) bool;
-pub extern fn z_view_string_loan(this_: [*c]const struct_z_view_string_t) [*c]const struct_z_loaned_string_t;
+pub extern fn z_view_string_loan(this_: [*c]const struct_z_view_string_t) [*c]const LoanedString;
 pub extern fn z_whatami_to_view_string(whatami: enum_z_whatami_t, str_out: [*c]struct_z_view_string_t) z_result_t;
 pub extern fn zc_cleanup_orphaned_shm_segments() void;
-pub extern fn zc_closure_log(this_: [*c]struct_zc_owned_closure_log_t, call: ?*const fn (enum_zc_log_severity_t, [*c]const struct_z_loaned_string_t, ?*anyopaque) callconv(.c) void, drop: ?*const fn (?*anyopaque) callconv(.c) void, context: ?*anyopaque) void;
-pub extern fn zc_closure_log_call(closure: [*c]const struct_zc_loaned_closure_log_t, severity: enum_zc_log_severity_t, msg: [*c]const struct_z_loaned_string_t) void;
+pub extern fn zc_closure_log(this_: [*c]struct_zc_owned_closure_log_t, call: ?*const fn (enum_zc_log_severity_t, [*c]const LoanedString, ?*anyopaque) callconv(.c) void, drop: ?*const fn (?*anyopaque) callconv(.c) void, context: ?*anyopaque) void;
+pub extern fn zc_closure_log_call(closure: [*c]const struct_zc_loaned_closure_log_t, severity: enum_zc_log_severity_t, msg: [*c]const LoanedString) void;
 pub extern fn zc_closure_log_drop(closure_: [*c]struct_zc_moved_closure_log_t) void;
 pub extern fn zc_closure_log_loan(closure: [*c]const struct_zc_owned_closure_log_t) [*c]const struct_zc_loaned_closure_log_t;
 pub extern fn zc_concurrent_close_handle_drop(this_: [*c]struct_zc_moved_concurrent_close_handle_t) void;
@@ -1765,25 +1755,25 @@ pub extern fn ze_querying_subscriber_get(this_: [*c]const struct_ze_loaned_query
 pub extern fn ze_querying_subscriber_loan(this_: [*c]const struct_ze_owned_querying_subscriber_t) [*c]const struct_ze_loaned_querying_subscriber_t;
 pub extern fn ze_querying_subscriber_options_default(this_: [*c]struct_ze_querying_subscriber_options_t) void;
 pub extern fn ze_sample_miss_listener_drop(this_: [*c]struct_ze_moved_sample_miss_listener_t) void;
-pub extern fn ze_serialize_bool(this_: [*c]struct_z_owned_bytes_t, val: bool) z_result_t;
-pub extern fn ze_serialize_buf(this_: [*c]struct_z_owned_bytes_t, data: [*c]const u8, len: usize) z_result_t;
-pub extern fn ze_serialize_double(this_: [*c]struct_z_owned_bytes_t, val: f64) z_result_t;
-pub extern fn ze_serialize_float(this_: [*c]struct_z_owned_bytes_t, val: f32) z_result_t;
-pub extern fn ze_serialize_int16(this_: [*c]struct_z_owned_bytes_t, val: i16) z_result_t;
-pub extern fn ze_serialize_int32(this_: [*c]struct_z_owned_bytes_t, val: i32) z_result_t;
-pub extern fn ze_serialize_int64(this_: [*c]struct_z_owned_bytes_t, val: i64) z_result_t;
-pub extern fn ze_serialize_int8(this_: [*c]struct_z_owned_bytes_t, val: i8) z_result_t;
-pub extern fn ze_serialize_slice(this_: [*c]struct_z_owned_bytes_t, slice: [*c]const struct_z_loaned_slice_t) z_result_t;
-pub extern fn ze_serialize_str(this_: [*c]struct_z_owned_bytes_t, str: [*c]const u8) z_result_t;
-pub extern fn ze_serialize_string(this_: [*c]struct_z_owned_bytes_t, str: [*c]const struct_z_loaned_string_t) z_result_t;
-pub extern fn ze_serialize_substr(this_: [*c]struct_z_owned_bytes_t, start: [*c]const u8, len: usize) z_result_t;
-pub extern fn ze_serialize_uint16(this_: [*c]struct_z_owned_bytes_t, val: u16) z_result_t;
-pub extern fn ze_serialize_uint32(this_: [*c]struct_z_owned_bytes_t, val: u32) z_result_t;
-pub extern fn ze_serialize_uint64(this_: [*c]struct_z_owned_bytes_t, val: u64) z_result_t;
-pub extern fn ze_serialize_uint8(this_: [*c]struct_z_owned_bytes_t, val: u8) z_result_t;
+pub extern fn ze_serialize_bool(this_: [*c]OwnedBytes, val: bool) z_result_t;
+pub extern fn ze_serialize_buf(this_: [*c]OwnedBytes, data: [*c]const u8, len: usize) z_result_t;
+pub extern fn ze_serialize_double(this_: [*c]OwnedBytes, val: f64) z_result_t;
+pub extern fn ze_serialize_float(this_: [*c]OwnedBytes, val: f32) z_result_t;
+pub extern fn ze_serialize_int16(this_: [*c]OwnedBytes, val: i16) z_result_t;
+pub extern fn ze_serialize_int32(this_: [*c]OwnedBytes, val: i32) z_result_t;
+pub extern fn ze_serialize_int64(this_: [*c]OwnedBytes, val: i64) z_result_t;
+pub extern fn ze_serialize_int8(this_: [*c]OwnedBytes, val: i8) z_result_t;
+pub extern fn ze_serialize_slice(this_: [*c]OwnedBytes, slice: [*c]const LoanedSlice) z_result_t;
+pub extern fn ze_serialize_str(this_: [*c]OwnedBytes, str: [*c]const u8) z_result_t;
+pub extern fn ze_serialize_string(this_: [*c]OwnedBytes, str: [*c]const LoanedString) z_result_t;
+pub extern fn ze_serialize_substr(this_: [*c]OwnedBytes, start: [*c]const u8, len: usize) z_result_t;
+pub extern fn ze_serialize_uint16(this_: [*c]OwnedBytes, val: u16) z_result_t;
+pub extern fn ze_serialize_uint32(this_: [*c]OwnedBytes, val: u32) z_result_t;
+pub extern fn ze_serialize_uint64(this_: [*c]OwnedBytes, val: u64) z_result_t;
+pub extern fn ze_serialize_uint8(this_: [*c]OwnedBytes, val: u8) z_result_t;
 pub extern fn ze_serializer_drop(this_: [*c]struct_ze_moved_serializer_t) void;
 pub extern fn ze_serializer_empty(this_: [*c]struct_ze_owned_serializer_t) z_result_t;
-pub extern fn ze_serializer_finish(this_: [*c]struct_ze_moved_serializer_t, bytes: [*c]struct_z_owned_bytes_t) void;
+pub extern fn ze_serializer_finish(this_: [*c]struct_ze_moved_serializer_t, bytes: [*c]OwnedBytes) void;
 pub extern fn ze_serializer_loan(this_: [*c]const struct_ze_owned_serializer_t) [*c]const struct_ze_loaned_serializer_t;
 pub extern fn ze_serializer_loan_mut(this_: [*c]struct_ze_owned_serializer_t) [*c]struct_ze_loaned_serializer_t;
 pub extern fn ze_serializer_serialize_bool(this_: [*c]struct_ze_loaned_serializer_t, val: bool) z_result_t;
@@ -1795,9 +1785,9 @@ pub extern fn ze_serializer_serialize_int32(this_: [*c]struct_ze_loaned_serializ
 pub extern fn ze_serializer_serialize_int64(this_: [*c]struct_ze_loaned_serializer_t, val: i64) z_result_t;
 pub extern fn ze_serializer_serialize_int8(this_: [*c]struct_ze_loaned_serializer_t, val: i8) z_result_t;
 pub extern fn ze_serializer_serialize_sequence_length(this_: [*c]struct_ze_loaned_serializer_t, len: usize) z_result_t;
-pub extern fn ze_serializer_serialize_slice(this_: [*c]struct_ze_loaned_serializer_t, slice: [*c]const struct_z_loaned_slice_t) z_result_t;
+pub extern fn ze_serializer_serialize_slice(this_: [*c]struct_ze_loaned_serializer_t, slice: [*c]const LoanedSlice) z_result_t;
 pub extern fn ze_serializer_serialize_str(this_: [*c]struct_ze_loaned_serializer_t, str: [*c]const u8) z_result_t;
-pub extern fn ze_serializer_serialize_string(this_: [*c]struct_ze_loaned_serializer_t, str: [*c]const struct_z_loaned_string_t) z_result_t;
+pub extern fn ze_serializer_serialize_string(this_: [*c]struct_ze_loaned_serializer_t, str: [*c]const LoanedString) z_result_t;
 pub extern fn ze_serializer_serialize_substr(this_: [*c]struct_ze_loaned_serializer_t, start: [*c]const u8, len: usize) z_result_t;
 pub extern fn ze_serializer_serialize_uint16(this_: [*c]struct_ze_loaned_serializer_t, val: u16) z_result_t;
 pub extern fn ze_serializer_serialize_uint32(this_: [*c]struct_ze_loaned_serializer_t, val: u32) z_result_t;
@@ -1808,12 +1798,12 @@ pub extern fn ze_undeclare_advanced_subscriber(this_: [*c]struct_ze_moved_advanc
 pub extern fn ze_undeclare_publication_cache(this_: [*c]struct_ze_moved_publication_cache_t) z_result_t;
 pub extern fn ze_undeclare_querying_subscriber(this_: [*c]struct_ze_moved_querying_subscriber_t) z_result_t;
 pub extern fn ze_undeclare_sample_miss_listener(this_: [*c]struct_ze_moved_sample_miss_listener_t) z_result_t;
-pub fn z_alloc_layout_move(arg_x: [*c]z_owned_alloc_layout_t) callconv(.c) [*c]z_moved_alloc_layout_t {
+pub fn z_alloc_layout_move(arg_x: [*c]OwnedAllocLayout) callconv(.c) [*c]z_moved_alloc_layout_t {
     var x = arg_x;
     _ = &x;
     return @as([*c]z_moved_alloc_layout_t, @ptrCast(@alignCast(x)));
 }
-pub fn z_bytes_move(arg_x: [*c]z_owned_bytes_t) callconv(.c) [*c]z_moved_bytes_t {
+pub fn z_bytes_move(arg_x: [*c]OwnedBytes) callconv(.c) [*c]z_moved_bytes_t {
     var x = arg_x;
     _ = &x;
     return @as([*c]z_moved_bytes_t, @ptrCast(@alignCast(x)));
@@ -1988,7 +1978,7 @@ pub fn z_shm_move(arg_x: [*c]z_owned_shm_t) callconv(.c) [*c]z_moved_shm_t {
     _ = &x;
     return @as([*c]z_moved_shm_t, @ptrCast(@alignCast(x)));
 }
-pub fn z_shm_mut_move(arg_x: [*c]z_owned_shm_mut_t) callconv(.c) [*c]z_moved_shm_mut_t {
+pub fn z_shm_mut_move(arg_x: [*c]OwnedShmMut) callconv(.c) [*c]z_moved_shm_mut_t {
     var x = arg_x;
     _ = &x;
     return @as([*c]z_moved_shm_mut_t, @ptrCast(@alignCast(x)));
@@ -2078,7 +2068,7 @@ pub fn ze_serializer_move(arg_x: [*c]ze_owned_serializer_t) callconv(.c) [*c]ze_
     _ = &x;
     return @as([*c]ze_moved_serializer_t, @ptrCast(@alignCast(x)));
 }
-pub fn z_alloc_layout_take(arg_this_: [*c]z_owned_alloc_layout_t, arg_x: [*c]z_moved_alloc_layout_t) callconv(.c) void {
+pub fn z_alloc_layout_take(arg_this_: [*c]OwnedAllocLayout, arg_x: [*c]z_moved_alloc_layout_t) callconv(.c) void {
     var this_ = arg_this_;
     _ = &this_;
     var x = arg_x;
@@ -2086,7 +2076,7 @@ pub fn z_alloc_layout_take(arg_this_: [*c]z_owned_alloc_layout_t, arg_x: [*c]z_m
     this_.* = x.*._this;
     z_internal_alloc_layout_null(&x.*._this);
 }
-pub fn z_bytes_take(arg_this_: [*c]z_owned_bytes_t, arg_x: [*c]z_moved_bytes_t) callconv(.c) void {
+pub fn z_bytes_take(arg_this_: [*c]OwnedBytes, arg_x: [*c]z_moved_bytes_t) callconv(.c) void {
     var this_ = arg_this_;
     _ = &this_;
     var x = arg_x;
@@ -2366,7 +2356,7 @@ pub fn z_shm_take(arg_this_: [*c]z_owned_shm_t, arg_x: [*c]z_moved_shm_t) callco
     this_.* = x.*._this;
     z_internal_shm_null(&x.*._this);
 }
-pub fn z_shm_mut_take(arg_this_: [*c]z_owned_shm_mut_t, arg_x: [*c]z_moved_shm_mut_t) callconv(.c) void {
+pub fn z_shm_mut_take(arg_this_: [*c]OwnedShmMut, arg_x: [*c]z_moved_shm_mut_t) callconv(.c) void {
     var this_ = arg_this_;
     _ = &this_;
     var x = arg_x;
@@ -2517,7 +2507,7 @@ pub const z_closure_query_callback_t = ?*const fn ([*c]z_loaned_query_t, ?*anyop
 pub const z_closure_reply_callback_t = ?*const fn ([*c]z_loaned_reply_t, ?*anyopaque) callconv(.c) void;
 pub const z_closure_sample_callback_t = ?*const fn ([*c]z_loaned_sample_t, ?*anyopaque) callconv(.c) void;
 pub const z_closure_zid_callback_t = ?*const fn ([*c]const z_id_t, ?*anyopaque) callconv(.c) void;
-pub const zc_closure_log_callback_t = ?*const fn (zc_log_severity_t, [*c]const z_loaned_string_t, ?*anyopaque) callconv(.c) void;
+pub const zc_closure_log_callback_t = ?*const fn (zc_log_severity_t, [*c]const LoanedString, ?*anyopaque) callconv(.c) void;
 pub const ze_closure_miss_callback_t = ?*const fn ([*c]const ze_miss_t, ?*anyopaque) callconv(.c) void;
 pub fn z_malloc(arg_size: usize) callconv(.c) ?*anyopaque {
     var size = arg_size;
