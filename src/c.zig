@@ -180,14 +180,12 @@ pub const struct_z_loaned_condvar_t = extern struct {
     _0: [4]u8 = @import("std").mem.zeroes([4]u8),
 };
 pub const z_loaned_condvar_t = struct_z_loaned_condvar_t;
-pub const struct_z_loaned_mutex_t = extern struct {
+pub const LoanedMutex = extern struct {
     _0: [24]u8 = @import("std").mem.zeroes([24]u8),
 };
-pub const z_loaned_mutex_t = struct_z_loaned_mutex_t;
-pub const struct_z_owned_config_t = extern struct {
+pub const OwnedConfig = extern struct {
     _0: [1840]u8 = @import("std").mem.zeroes([1840]u8),
 };
-pub const z_owned_config_t = struct_z_owned_config_t;
 pub const struct_z_loaned_config_t = extern struct {
     _0: [1840]u8 = @import("std").mem.zeroes([1840]u8),
 };
@@ -665,7 +663,7 @@ pub const struct_z_moved_condvar_t = extern struct {
 };
 pub const z_moved_condvar_t = struct_z_moved_condvar_t;
 pub const struct_z_moved_config_t = extern struct {
-    _this: struct_z_owned_config_t = @import("std").mem.zeroes(struct_z_owned_config_t),
+    _this: OwnedConfig = @import("std").mem.zeroes(OwnedConfig),
 };
 pub const z_moved_config_t = struct_z_moved_config_t;
 pub const struct_z_queryable_options_t = extern struct {
@@ -1173,12 +1171,12 @@ pub extern fn z_condvar_init(this_: [*c]struct_z_owned_condvar_t) void;
 pub extern fn z_condvar_loan(this_: [*c]const struct_z_owned_condvar_t) [*c]const struct_z_loaned_condvar_t;
 pub extern fn z_condvar_loan_mut(this_: [*c]struct_z_owned_condvar_t) [*c]struct_z_loaned_condvar_t;
 pub extern fn z_condvar_signal(this_: [*c]const struct_z_loaned_condvar_t) z_result_t;
-pub extern fn z_condvar_wait(this_: [*c]const struct_z_loaned_condvar_t, m: [*c]struct_z_loaned_mutex_t) z_result_t;
-pub extern fn z_config_clone(dst: [*c]struct_z_owned_config_t, this_: [*c]const struct_z_loaned_config_t) void;
-pub extern fn z_config_default(this_: [*c]struct_z_owned_config_t) z_result_t;
+pub extern fn z_condvar_wait(this_: [*c]const struct_z_loaned_condvar_t, m: [*c]LoanedMutex) z_result_t;
+pub extern fn z_config_clone(dst: [*c]OwnedConfig, this_: [*c]const struct_z_loaned_config_t) void;
+pub extern fn z_config_default(this_: [*c]OwnedConfig) z_result_t;
 pub extern fn z_config_drop(this_: [*c]struct_z_moved_config_t) void;
-pub extern fn z_config_loan(this_: [*c]const struct_z_owned_config_t) [*c]const struct_z_loaned_config_t;
-pub extern fn z_config_loan_mut(this_: [*c]struct_z_owned_config_t) [*c]struct_z_loaned_config_t;
+pub extern fn z_config_loan(this_: [*c]const OwnedConfig) [*c]const struct_z_loaned_config_t;
+pub extern fn z_config_loan_mut(this_: [*c]OwnedConfig) [*c]struct_z_loaned_config_t;
 pub extern fn z_declare_background_queryable(session: [*c]const struct_z_loaned_session_t, key_expr: [*c]const struct_z_loaned_keyexpr_t, callback: [*c]struct_z_moved_closure_query_t, options: [*c]struct_z_queryable_options_t) z_result_t;
 pub extern fn z_declare_background_subscriber(session: [*c]const struct_z_loaned_session_t, key_expr: [*c]const struct_z_loaned_keyexpr_t, callback: [*c]struct_z_moved_closure_sample_t, options: [*c]struct_z_subscriber_options_t) z_result_t;
 pub extern fn z_declare_keyexpr(session: [*c]const struct_z_loaned_session_t, declared_key_expr: [*c]struct_z_owned_keyexpr_t, key_expr: [*c]const struct_z_loaned_keyexpr_t) z_result_t;
@@ -1303,8 +1301,8 @@ pub extern fn z_internal_closure_zid_check(this_: [*c]const struct_z_owned_closu
 pub extern fn z_internal_closure_zid_null(this_: [*c]struct_z_owned_closure_zid_t) void;
 pub extern fn z_internal_condvar_check(this_: [*c]const struct_z_owned_condvar_t) bool;
 pub extern fn z_internal_condvar_null(this_: [*c]struct_z_owned_condvar_t) void;
-pub extern fn z_internal_config_check(this_: [*c]const struct_z_owned_config_t) bool;
-pub extern fn z_internal_config_null(this_: [*c]struct_z_owned_config_t) void;
+pub extern fn z_internal_config_check(this_: [*c]const OwnedConfig) bool;
+pub extern fn z_internal_config_null(this_: [*c]OwnedConfig) void;
 pub extern fn z_internal_encoding_check(this_: [*c]const struct_z_owned_encoding_t) bool;
 pub extern fn z_internal_encoding_null(this_: [*c]struct_z_owned_encoding_t) void;
 pub extern fn z_internal_fifo_handler_query_check(this_: [*c]const struct_z_owned_fifo_handler_query_t) bool;
@@ -1403,10 +1401,10 @@ pub extern fn z_memory_layout_loan(this_: [*c]const struct_z_owned_memory_layout
 pub extern fn z_memory_layout_new(this_: [*c]struct_z_owned_memory_layout_t, size: usize, alignment: struct_z_alloc_alignment_t) z_result_t;
 pub extern fn z_mutex_drop(this_: [*c]struct_z_moved_mutex_t) void;
 pub extern fn z_mutex_init(this_: [*c]struct_z_owned_mutex_t) z_result_t;
-pub extern fn z_mutex_loan_mut(this_: [*c]struct_z_owned_mutex_t) [*c]struct_z_loaned_mutex_t;
-pub extern fn z_mutex_lock(this_: [*c]struct_z_loaned_mutex_t) z_result_t;
-pub extern fn z_mutex_try_lock(this_: [*c]struct_z_loaned_mutex_t) z_result_t;
-pub extern fn z_mutex_unlock(this_: [*c]struct_z_loaned_mutex_t) z_result_t;
+pub extern fn z_mutex_loan_mut(this_: [*c]struct_z_owned_mutex_t) [*c]LoanedMutex;
+pub extern fn z_mutex_lock(this_: [*c]LoanedMutex) z_result_t;
+pub extern fn z_mutex_try_lock(this_: [*c]LoanedMutex) z_result_t;
+pub extern fn z_mutex_unlock(this_: [*c]LoanedMutex) z_result_t;
 pub extern fn z_open(this_: [*c]struct_z_owned_session_t, config: [*c]struct_z_moved_config_t, _options: [*c]const struct_z_open_options_t) z_result_t;
 pub extern fn z_open_options_default(this_: [*c]struct_z_open_options_t) void;
 pub extern fn z_open_with_custom_shm_clients(this_: [*c]struct_z_owned_session_t, config: [*c]struct_z_moved_config_t, shm_clients: [*c]const struct_z_loaned_shm_client_storage_t) z_result_t;
@@ -1651,9 +1649,9 @@ pub extern fn zc_closure_log_drop(closure_: [*c]struct_zc_moved_closure_log_t) v
 pub extern fn zc_closure_log_loan(closure: [*c]const struct_zc_owned_closure_log_t) [*c]const struct_zc_loaned_closure_log_t;
 pub extern fn zc_concurrent_close_handle_drop(this_: [*c]struct_zc_moved_concurrent_close_handle_t) void;
 pub extern fn zc_concurrent_close_handle_wait(handle: [*c]struct_zc_moved_concurrent_close_handle_t) z_result_t;
-pub extern fn zc_config_from_env(this_: [*c]struct_z_owned_config_t) z_result_t;
-pub extern fn zc_config_from_file(this_: [*c]struct_z_owned_config_t, path: [*c]const u8) z_result_t;
-pub extern fn zc_config_from_str(this_: [*c]struct_z_owned_config_t, s: [*c]const u8) z_result_t;
+pub extern fn zc_config_from_env(this_: [*c]OwnedConfig) z_result_t;
+pub extern fn zc_config_from_file(this_: [*c]OwnedConfig, path: [*c]const u8) z_result_t;
+pub extern fn zc_config_from_str(this_: [*c]OwnedConfig, s: [*c]const u8) z_result_t;
 pub extern fn zc_config_get_from_str(this_: [*c]const struct_z_loaned_config_t, key: [*c]const u8, out_value_string: [*c]struct_z_owned_string_t) z_result_t;
 pub extern fn zc_config_get_from_substr(this_: [*c]const struct_z_loaned_config_t, key: [*c]const u8, key_len: usize, out_value_string: [*c]struct_z_owned_string_t) z_result_t;
 pub extern fn zc_config_insert_json5(this_: [*c]struct_z_loaned_config_t, key: [*c]const u8, value: [*c]const u8) z_result_t;
@@ -1866,7 +1864,7 @@ pub fn z_condvar_move(arg_x: [*c]z_owned_condvar_t) callconv(.c) [*c]z_moved_con
     _ = &x;
     return @as([*c]z_moved_condvar_t, @ptrCast(@alignCast(x)));
 }
-pub fn z_config_move(arg_x: [*c]z_owned_config_t) callconv(.c) [*c]z_moved_config_t {
+pub fn z_config_move(arg_x: [*c]OwnedConfig) callconv(.c) [*c]z_moved_config_t {
     var x = arg_x;
     _ = &x;
     return @as([*c]z_moved_config_t, @ptrCast(@alignCast(x)));
@@ -2169,7 +2167,7 @@ pub fn z_condvar_take(arg_this_: [*c]z_owned_condvar_t, arg_x: [*c]z_moved_condv
     this_.* = x.*._this;
     z_internal_condvar_null(&x.*._this);
 }
-pub fn z_config_take(arg_this_: [*c]z_owned_config_t, arg_x: [*c]z_moved_config_t) callconv(.c) void {
+pub fn z_config_take(arg_this_: [*c]OwnedConfig, arg_x: [*c]z_moved_config_t) callconv(.c) void {
     var this_ = arg_this_;
     _ = &this_;
     var x = arg_x;
