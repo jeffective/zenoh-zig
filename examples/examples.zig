@@ -3,7 +3,7 @@ const std = @import("std");
 const zenoh = @import("zenoh");
 
 fn publish() !void {
-    var config: zenoh.c.z_owned_config_t = undefined;
+    var config: zenoh.c.OwnedConfig = undefined;
     _ = zenoh.c.z_config_default(&config);
     defer zenoh.c.z_config_drop(zenoh.c.z_config_move(&config));
 
@@ -39,7 +39,7 @@ fn data_handler(sample: [*c]zenoh.c.struct_z_loaned_sample_t, arg: ?*anyopaque) 
 }
 
 fn subscribe() !void {
-    var config: zenoh.c.z_owned_config_t = undefined;
+    var config: zenoh.c.OwnedConfig = undefined;
     _ = zenoh.c.z_config_default(&config);
     defer zenoh.c.z_config_drop(zenoh.c.z_config_move(&config));
 
