@@ -48,7 +48,7 @@
         },
     },
     .fingerprint = 0x9afd706a63cc3640, // Changing this has security and trust implications.
-    .minimum_zig_version = "0.14.0-dev.3445+6c3cbb0c8",
+    .minimum_zig_version = "0.14.0",
     .paths = .{
         "build.zig",
         "build.zig.zon",
