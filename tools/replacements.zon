@@ -1,0 +1,447 @@
+.{
+    // type renames
+    .{ "struct_z_", "z_" },
+    .{ "struct_zc_", "zc_" },
+    .{ "struct_ze_", "ze_" },
+
+    .{ "z_owned_encoding_t", "Encoding" },
+    .{ "z_moved_encoding_t", "Encoding" },
+    .{ "pub const Encoding = Encoding;\n", "" },
+    .{ "t z_bytes_reader_t", "t BytesReader" },
+    .{ "= z_bytes_reader_t", "= BytesReader" },
+    .{ ") z_bytes_reader_t", ") BytesReader" },
+    .{ "z_bytes_reader_t)", "BytesReader)" },
+    .{ "z_bytes_reader_t,", "BytesReader," },
+    .{ "pub const BytesReader = BytesReader;\n", "" },
+
+    .{ "_moved_", "_owned_" },
+    .{ "_owned_", "_" },
+
+    .{ "z_buf_alloc_result_t", "BufAllocResult" },
+    .{ "pub const BufAllocResult = BufAllocResult;\n", "" },
+
+    .{ "z_loaned_alloc_layout_t", "LoanedAllocLayout" },
+    .{ "pub const LoanedAllocLayout = LoanedAllocLayout;\n", "" },
+
+    .{ "z_loaned_shm_provider_t", "LoanedShmProvider" },
+    .{ "pub const LoanedShmProvider = LoanedShmProvider;\n", "" },
+
+    .{ "z_alloc_alignment_t", "AllocAlignment" },
+    .{ "pub const AllocAlignment = AllocAlignment;\n", "" },
+
+    .{ "z_loaned_bytes_t", "LoanedBytes" },
+    .{ "pub const LoanedBytes = LoanedBytes;\n", "" },
+
+    .{ "z_loaned_shm_t", "LoanedShm" },
+    .{ "pub const LoanedShm = LoanedShm;\n", "" },
+
+    .{ "z_loaned_slice_t", "LoanedSlice" },
+    .{ "pub const LoanedSlice = LoanedSlice;\n", "" },
+
+    .{ "z_loaned_string_t", "LoanedString" },
+    .{ "pub const LoanedString = LoanedString;\n", "" },
+
+    .{ "z_view_slice_t", "ViewSlice" },
+    .{ "pub const ViewSlice = ViewSlice;\n", "" },
+
+    .{ "z_loaned_bytes_writer_t", "LoanedBytesWriter" },
+    .{ "pub const LoanedBytesWriter = LoanedBytesWriter;\n", "" },
+
+    .{ "z_bytes_writer_t", "BytesWriter" },
+    .{ "pub const BytesWriter = BytesWriter;\n", "" },
+
+    .{ "z_chunk_alloc_result_t", "ChunkAllocResult" },
+    .{ "pub const ChunkAllocResult = ChunkAllocResult;\n", "" },
+
+    .{ "z_chunk_descriptor_t", "ChunkDescriptor" },
+    .{ "pub const ChunkDescriptor = ChunkDescriptor;\n", "" },
+
+    .{ "z_allocated_chunk_t", "AllocatedChunk" },
+    .{ "pub const AllocatedChunk = AllocatedChunk;\n", "" },
+
+    .{ "z_loaned_session_t", "LoanedSession" },
+    .{ "pub const LoanedSession = LoanedSession;\n", "" },
+
+    .{ "z_loaned_hello_t", "LoanedHello" },
+    .{ "pub const LoanedHello = LoanedHello;\n", "" },
+
+    .{ "z_loaned_closure_hello_t", "LoanedClosureHello" },
+    .{ "pub const LoanedClosureHello = LoanedClosureHello;\n", "" },
+
+    .{ "z_loaned_closure_matching_status_t", "LoanedClosureMatchingStatus" },
+    .{ "pub const LoanedClosureMatchingStatus = LoanedClosureMatchingStatus;\n", "" },
+
+    .{ "z_loaned_query_t", "LoanedQuery" },
+    .{ "pub const LoanedQuery = LoanedQuery;\n", "" },
+
+    .{ "z_loaned_closure_query_t", "LoanedClosureQuery" },
+    .{ "pub const LoanedClosureQuery = LoanedClosureQuery;\n", "" },
+
+    .{ "z_loaned_reply_t", "LoanedReply" },
+    .{ "pub const LoanedReply = LoanedReply;\n", "" },
+
+    .{ "z_loaned_closure_reply_t", "LoanedClosureReply" },
+    .{ "pub const LoanedClosureReply = LoanedClosureReply;\n", "" },
+
+    .{ "z_loaned_sample_t", "LoanedSample" },
+    .{ "pub const LoanedSample = LoanedSample;\n", "" },
+
+    .{ "z_loaned_closure_sample_t", "LoanedClosureSample" },
+    .{ "pub const LoanedClosureSample = LoanedClosureSample;\n", "" },
+
+    .{ "t z_id_t", "t Id" },
+    .{ "= z_id_t", "= Id" },
+    .{ "z_id_t;", "Id;" },
+    .{ "z_id_t)", "Id)" },
+    .{ "pub const Id = Id;\n", "" },
+
+    .{ "z_loaned_closure_zid_t", "LoanedClosureZid" },
+    .{ "pub const LoanedClosureZid = LoanedClosureZid;\n", "" },
+
+    .{ "z_condvar_t", "Condvar" },
+    .{ "pub const Condvar = Condvar;\n", "" },
+
+    .{ "z_loaned_condvar_t", "LoanedCondvar" },
+    .{ "pub const LoanedCondvar = LoanedCondvar;\n", "" },
+
+    .{ "z_loaned_mutex_t", "LoanedMutex" },
+    .{ "pub const LoanedMutex = LoanedMutex;\n", "" },
+
+    .{ "z_config_t", "Config" },
+    .{ "pub const Config = Config;\n", "" },
+
+    .{ "z_loaned_config_t", "LoanedConfig" },
+    .{ "pub const LoanedConfig = LoanedConfig;\n", "" },
+
+    .{ "z_loaned_keyexpr_t", "LoanedKeyexpr" },
+    .{ "pub const LoanedKeyexpr = LoanedKeyexpr;\n", "" },
+
+    .{ "z_keyexpr_t", "Keyexpr" },
+    .{ "pub const Keyexpr = Keyexpr;\n", "" },
+
+    .{ "z_querier_t", "Querier" },
+    .{ "pub const Querier = Querier;\n", "" },
+
+    .{ "z_timestamp_t", "Timestamp" },
+    .{ "pub const Timestamp = Timestamp;\n", "" },
+
+    .{ "z_loaned_encoding_t", "LoanedEncoding" },
+    .{ "pub const LoanedEncoding = LoanedEncoding;\n", "" },
+
+    .{ "z_entity_global_id_t", "EntityGlobalId" },
+    .{ "pub const EntityGlobalId = EntityGlobalId;\n", "" },
+
+    .{ "t z_fifo_handler_query_t", "t FifoHandlerQuery" },
+    .{ "= z_fifo_handler_query_t", "= FifoHandlerQuery" },
+    .{ "z_fifo_handler_query_t)", "FifoHandlerQuery)" },
+    .{ "z_fifo_handler_query_t,", "FifoHandlerQuery," },
+    .{ "pub const FifoHandlerQuery = FifoHandlerQuery;\n", "" },
+
+    .{ "t z_fifo_handler_reply_t", "t FifoHandlerReply" },
+    .{ "= z_fifo_handler_reply_t", "= FifoHandlerReply" },
+    .{ "z_fifo_handler_reply_t)", "FifoHandlerReply)" },
+    .{ "z_fifo_handler_reply_t,", "FifoHandlerReply," },
+    .{ "pub const FifoHandlerReply = FifoHandlerReply;\n", "" },
+
+    .{ "t z_fifo_handler_sample_t", "t FifoHandlerSample" },
+    .{ "= z_fifo_handler_sample_t", "= FifoHandlerSample" },
+    .{ "z_fifo_handler_sample_t)", "FifoHandlerSample)" },
+    .{ "z_fifo_handler_sample_t,", "FifoHandlerSample," },
+    .{ "pub const FifoHandlerSample = FifoHandlerSample;\n", "" },
+
+    .{ "z_loaned_fifo_handler_query_t", "LoanedFifoHandlerQuery" },
+    .{ "pub const LoanedFifoHandlerQuery = LoanedFifoHandlerQuery;\n", "" },
+
+    .{ "t z_query_t", "t Query" },
+    .{ "= z_query_t", "= Query" },
+    .{ "z_query_t)", "Query)" },
+    .{ "z_query_t,", "Query," },
+
+    .{ "pub const Query = Query;\n", "" },
+
+    .{ "z_loaned_fifo_handler_reply_t", "LoanedFifoHandlerReply" },
+    .{ "pub const LoanedFifoHandlerReply = LoanedFifoHandlerReply;\n", "" },
+
+    .{ "z_reply_t", "Reply" },
+    .{ "pub const Reply = Reply;\n", "" },
+
+    .{ "z_loaned_fifo_handler_sample_t", "LoanedFifoHandlerSample" },
+    .{ "pub const LoanedFifoHandlerSample = LoanedFifoHandlerSample;\n", "" },
+
+    .{ "z_source_info_t", "SourceInfo" },
+    .{ "pub const SourceInfo = SourceInfo;\n", "" },
+
+    .{ "z_hello_t", "Hello" },
+    .{ "pub const Hello = Hello;\n", "" },
+
+    .{ "t z_mutex_t", "t Mutex" },
+    .{ "= z_mutex_t", "= Mutex" },
+    .{ "z_mutex_t)", "Mutex)" },
+    .{ "pub const Mutex = Mutex;\n", "" },
+
+    .{ "z_shm_client_storage_t", "ShmClientStorage" },
+    .{ "pub const ShmClientStorage = ShmClientStorage;\n", "" },
+
+    .{ "z_view_string_t", "ViewString" },
+    .{ "pub const ViewString = ViewString;\n", "" },
+
+    .{ "z_loaned_liveliness_token_t", "LoanedLivelinessToken" },
+    .{ "pub const LoanedLivelinessToken = LoanedLivelinessToken;\n", "" },
+
+    .{ "z_loaned_memory_layout_t", "LoanedMemoryLayout" },
+    .{ "pub const LoanedMemoryLayout = LoanedMemoryLayout;\n", "" },
+
+    .{ "z_loaned_shm_client_storage_t", "LoanedShmClientStorage" },
+    .{ "pub const LoanedShmClientStorage = LoanedShmClientStorage;\n", "" },
+
+    .{ "z_shm_client_t", "ShmClient" },
+    .{ "pub const ShmClient = ShmClient;\n", "" },
+
+    .{ "t z_ring_handler_query_t", "t RingHandlerQuery" },
+    .{ "= z_ring_handler_query_t", "= RingHandlerQuery" },
+    .{ "z_ring_handler_query_t)", "RingHandlerQuery)" },
+    .{ "z_ring_handler_query_t,", "RingHandlerQuery," },
+    .{ "pub const RingHandlerQuery = RingHandlerQuery;\n", "" },
+
+    .{ "z_loaned_publisher_t", "LoanedPublisher" },
+    .{ "pub const LoanedPublisher = LoanedPublisher;\n", "" },
+
+    .{ "z_loaned_querier_t", "LoanedQuerier" },
+    .{ "pub const LoanedQuerier = LoanedQuerier;\n", "" },
+
+    .{ "z_loaned_queryable_t", "LoanedQueryable" },
+    .{ "pub const LoanedQueryable = LoanedQueryable;\n", "" },
+
+    .{ "z_loaned_reply_err_t", "LoanedReplyErr" },
+    .{ "pub const LoanedReplyErr = LoanedReplyErr;\n", "" },
+
+    .{ "z_loaned_ring_handler_query_t", "LoanedRingHandlerQuery" },
+    .{ "pub const LoanedRingHandlerQuery = LoanedRingHandlerQuery;\n", "" },
+
+    .{ "z_loaned_ring_handler_reply_t", "LoanedRingHandlerReply" },
+    .{ "pub const LoanedRingHandlerReply = LoanedRingHandlerReply;\n", "" },
+
+    .{ "z_loaned_ring_handler_sample_t", "LoanedRingHandlerSample" },
+    .{ "pub const LoanedRingHandlerSample = LoanedRingHandlerSample;\n", "" },
+
+    .{ "z_loaned_source_info_t", "LoanedSourceInfo" },
+    .{ "pub const LoanedSourceInfo = LoanedSourceInfo;\n", "" },
+
+    .{ "z_liveliness_token_options_t", "LivelinessTokenOptions" },
+    .{ "pub const LivelinessTokenOptions = LivelinessTokenOptions;\n", "" },
+
+    .{ "z_liveliness_get_options_t", "LivelinessGetOptions" },
+    .{ "pub const LivelinessGetOptions = LivelinessGetOptions;\n", "" },
+
+    .{ "z_liveliness_token_t", "LivelinessToken" },
+    .{ "pub const LivelinessToken = LivelinessToken;\n", "" },
+
+    .{ "z_matching_listener_t", "MatchingListener" },
+    .{ "pub const MatchingListener = MatchingListener;\n", "" },
+
+    .{ "z_memory_layout_t", "MemoryLayout" },
+    .{ "pub const MemoryLayout = MemoryLayout;\n", "" },
+
+    .{ "z_open_options_t", "OpenOptions" },
+    .{ "pub const OpenOptions = OpenOptions;\n", "" },
+
+    .{ "z_publisher_delete_options_t", "PublisherDeleteOptions" },
+    .{ "pub const PublisherDeleteOptions = PublisherDeleteOptions;\n", "" },
+
+    .{ "z_publisher_t", "Publisher" },
+    .{ "pub const Publisher = Publisher;\n", "" },
+
+    .{ "z_publisher_put_options_t", "PublisherPutOptions" },
+    .{ "pub const PublisherPutOptions = PublisherPutOptions;\n", "" },
+
+    .{ "z_put_options_t", "PutOptions" },
+    .{ "pub const PutOptions = PutOptions;\n", "" },
+
+    .{ "z_querier_get_options_t", "QuerierGetOptions" },
+    .{ "pub const QuerierGetOptions = QuerierGetOptions;\n", "" },
+
+    .{ "z_query_reply_options_t", "QueryReplyOptions" },
+    .{ "pub const QueryReplyOptions = QueryReplyOptions;\n", "" },
+
+    .{ "z_query_reply_del_options_t", "QueryReplyDelOptions" },
+    .{ "pub const QueryReplyDelOptions = QueryReplyDelOptions;\n", "" },
+
+    .{ "z_query_reply_err_options_t", "QueryReplyErrOptions" },
+    .{ "pub const QueryReplyErrOptions = QueryReplyErrOptions;\n", "" },
+
+    .{ "z_queryable_t", "Queryable" },
+    .{ "pub const Queryable = Queryable;\n", "" },
+
+    .{ "z_reply_err_t", "ReplyErr" },
+    .{ "pub const ReplyErr = ReplyErr;\n", "" },
+
+    .{ "t z_ring_handler_reply_t", "t RingHandlerReply" },
+    .{ "= z_ring_handler_reply_t", "= RingHandlerReply" },
+    .{ "z_ring_handler_reply_t,", "RingHandlerReply," },
+    .{ "z_ring_handler_reply_t)", "RingHandlerReply)" },
+    .{ "pub const RingHandlerReply = RingHandlerReply;\n", "" },
+
+    .{ "t z_ring_handler_sample_t", "t RingHandlerSample" },
+    .{ "= z_ring_handler_sample_t", "= RingHandlerSample" },
+    .{ "z_ring_handler_sample_t)", "RingHandlerSample)" },
+    .{ "z_ring_handler_sample_t,", "RingHandlerSample," },
+    .{ "pub const RingHandlerSample = RingHandlerSample;\n", "" },
+
+    .{ "t z_sample_t", "t Sample" },
+    .{ "= z_sample_t", "= Sample" },
+    .{ "z_sample_t)", "Sample)" },
+    .{ "z_sample_t,", "Sample," },
+    .{ "pub const Sample = Sample;\n", "" },
+
+    .{ "z_scout_options_t", "ScoutOptions" },
+    .{ "pub const ScoutOptions = ScoutOptions;\n", "" },
+
+    .{ "z_session_t", "Session" },
+    .{ "pub const Session = Session;\n", "" },
+
+    .{ "t z_shm_provider_t", "t ShmProvider" },
+    .{ "= z_shm_provider_t", "= ShmProvider" },
+    .{ "z_shm_provider_t)", "ShmProvider)" },
+    .{ "z_shm_provider_t,", "ShmProvider," },
+    .{ "pub const ShmProvider = ShmProvider;\n", "" },
+
+    .{ "z_protocol_id_t", "ProtocolId" },
+
+    .{ "z_string_array_t", "StringArray" },
+    .{ "pub const StringArray = StringArray;\n", "" },
+
+    .{ "z_subscriber_t", "Subscriber" },
+    .{ "pub const Subscriber = Subscriber;\n", "" },
+
+    .{ "z_task_t", "Task" },
+    .{ "pub const Task = Task;\n", "" },
+
+    .{ "z_result_t", "Result" },
+
+    .{ "z_task_attr_t", "TaskAttr" },
+    .{ "pub const TaskAttr = TaskAttr;\n", "" },
+
+    .{ "z_time_t", "Time" },
+    .{ "pub const Time = Time;\n", "" },
+
+    .{ "z_shm_segment_t", "ShmSegment" },
+    .{ "pub const ShmSegment = ShmSegment;\n", "" },
+
+    .{ "z_loaned_shm_mut_t", "LoanedShmMut" },
+    .{ "pub const LoanedShmMut = LoanedShmMut;\n", "" },
+
+    .{ "z_buf_layout_alloc_result_t", "BufLayoutAllocResult" },
+    .{ "pub const BufLayoutAllocResult = BufLayoutAllocResult;\n", "" },
+
+    .{ "pub const zc_threadsafe_context_data_t = zc_threadsafe_context_data_t;\n", "" },
+    .{ "pub const zc_threadsafe_context_t = zc_threadsafe_context_t;\n", "" },
+
+    .{ "pub const zc_concurrent_close_handle_t = zc_concurrent_close_handle_t;\n", "" },
+    .{ "pub const zc_shm_segment_callbacks_t = zc_shm_segment_callbacks_t;\n", "" },
+    .{ "pub const zc_shm_client_callbacks_t = zc_shm_client_callbacks_t;\n", "" },
+    .{ "pub const zc_loaned_shm_client_list_t = zc_loaned_shm_client_list_t;\n", "" },
+    .{ "pub const zc_context_t = zc_context_t;\n", "" },
+    .{ "pub const z_loaned_string_array_t = z_loaned_string_array_t;\n", "" },
+    .{ "pub const z_loaned_subscriber_t = z_loaned_subscriber_t;\n", "" },
+    .{ "pub const z_view_keyexpr_t = z_view_keyexpr_t;\n", "" },
+    .{ "pub const zc_loaned_closure_log_t = zc_loaned_closure_log_t;\n", "" },
+    .{ "pub const zc_shm_client_list_t = zc_shm_client_list_t;\n", "" },
+    .{ "pub const ze_loaned_advanced_publisher_t = ze_loaned_advanced_publisher_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_t = ze_advanced_publisher_t;\n", "" },
+    .{ "pub const ze_loaned_advanced_subscriber_t = ze_loaned_advanced_subscriber_t;\n", "" },
+    .{ "pub const ze_advanced_subscriber_t = ze_advanced_subscriber_t;\n", "" },
+    .{ "pub const ze_publication_cache_t = ze_publication_cache_t;\n", "" },
+    .{ "pub const ze_querying_subscriber_t = ze_querying_subscriber_t;\n", "" },
+    .{ "pub const ze_deserializer_t = ze_deserializer_t;\n", "" },
+    .{ "pub const ze_serializer_t = ze_serializer_t;\n", "" },
+    .{ "pub const ze_loaned_querying_subscriber_t = ze_loaned_querying_subscriber_t;\n", "" },
+    .{ "pub const ze_loaned_serializer_t = ze_loaned_serializer_t;\n", "" },
+    .{ "pub const z_alloc_layout_t = z_alloc_layout_t;\n", "" },
+    .{ "pub const z_bytes_t = z_bytes_t;\n", "" },
+    .{ "pub const z_shm_t = z_shm_t;\n", "" },
+    .{ "pub const z_shm_mut_t = z_shm_mut_t;\n", "" },
+    .{ "pub const z_slice_t = z_slice_t;\n", "" },
+    .{ "pub const z_string_t = z_string_t;\n", "" },
+    .{ "pub const z_bytes_slice_iterator_t = z_bytes_slice_iterator_t;\n", "" },
+    .{ "pub const z_clock_t = z_clock_t;\n", "" },
+    .{ "pub const z_close_options_t = z_close_options_t;\n", "" },
+    .{ "pub const z_closure_hello_t = z_closure_hello_t;\n", "" },
+    .{ "pub const z_matching_status_t = z_matching_status_t;\n", "" },
+    .{ "pub const z_closure_matching_status_t = z_closure_matching_status_t;\n", "" },
+    .{ "pub const z_closure_query_t = z_closure_query_t;\n", "" },
+    .{ "pub const z_closure_reply_t = z_closure_reply_t;\n", "" },
+    .{ "pub const z_closure_sample_t = z_closure_sample_t;\n", "" },
+    .{ "pub const z_closure_zid_t = z_closure_zid_t;\n", "" },
+    .{ "pub const z_queryable_options_t = z_queryable_options_t;\n", "" },
+    .{ "pub const z_publisher_options_t = z_publisher_options_t;\n", "" },
+    .{ "pub const z_query_consolidation_t = z_query_consolidation_t;\n", "" },
+    .{ "pub const z_querier_options_t = z_querier_options_t;\n", "" },
+    .{ "pub const z_delete_options_t = z_delete_options_t;\n", "" },
+    .{ "pub const z_get_options_t = z_get_options_t;\n", "" },
+    .{ "pub const z_liveliness_subscriber_options_t = z_liveliness_subscriber_options_t;\n", "" },
+    .{ "pub const zc_closure_log_t = zc_closure_log_t;\n", "" },
+    .{ "pub const zc_internal_encoding_data_t = zc_internal_encoding_data_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_cache_options_t = ze_advanced_publisher_cache_options_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_delete_options_t = ze_advanced_publisher_delete_options_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_sample_miss_detection_options_t = ze_advanced_publisher_sample_miss_detection_options_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_options_t = ze_advanced_publisher_options_t;\n", "" },
+    .{ "pub const ze_advanced_publisher_put_options_t = ze_advanced_publisher_put_options_t;\n", "" },
+    .{ "pub const ze_closure_miss_t = ze_closure_miss_t;\n", "" },
+    .{ "pub const ze_sample_miss_listener_t = ze_sample_miss_listener_t;\n", "" },
+    .{ "pub const ze_advanced_subscriber_history_options_t = ze_advanced_subscriber_history_options_t;\n", "" },
+    .{ "pub const ze_advanced_subscriber_last_sample_miss_detection_options_t = ze_advanced_subscriber_last_sample_miss_detection_options_t;\n", "" },
+    .{ "pub const ze_advanced_subscriber_recovery_options_t = ze_advanced_subscriber_recovery_options_t;\n", "" },
+    .{ "pub const ze_advanced_subscriber_options_t = ze_advanced_subscriber_options_t;\n", "" },
+    .{ "pub const ze_loaned_closure_miss_t = ze_loaned_closure_miss_t;\n", "" },
+    .{ "pub const ze_querying_subscriber_options_t = ze_querying_subscriber_options_t;\n", "" },
+    .{ "pub const ze_loaned_publication_cache_t = ze_loaned_publication_cache_t;\n", "" },
+    .{ "pub const ze_miss_t = ze_miss_t;\n", "" },
+    .{ "pub const z_subscriber_options_t = z_subscriber_options_t;\n", "" },
+    .{ "pub const zc_shm_provider_backend_callbacks_t = zc_shm_provider_backend_callbacks_t;\n", "" },
+    .{ "pub const ze_publication_cache_options_t = ze_publication_cache_options_t;\n", "" },
+
+    .{ "z_closure_reply_t", "ClosureReply" },
+    .{ "z_closure_matching_status_t", "ClosureMatchingStatus" },
+    .{ "z_matching_status_t", "MatchingStatus" },
+    .{ "z_closure_hello_t", "ClosureHello" },
+    .{ "z_close_options_t", "CloseOptions" },
+    .{ "z_clock_t", "Clock" },
+    .{ "z_bytes_slice_iterator_t", "BytesSliceIterator" },
+    .{ "z_get_options_t", "GetOptions" },
+    .{ "z_query_consolidation_t", "QueryConsolidation" },
+    .{ "z_delete_options_t", "DeleteOptions" },
+    .{ "z_querier_options_t", "QuerierOptions" },
+    .{ "z_publisher_options_t", "PublisherOptions" },
+    .{ "z_queryable_options_t", "QueryableOptions" },
+    .{ "z_closure_zid_t", "ClosureZid" },
+    .{ "z_closure_sample_t", "ClosureSample" },
+    .{ "z_closure_query_t", "ClosureQuery" },
+    .{ "z_liveliness_subscriber_options_t", "LivelinessSubscriberOptions" },
+    .{ "z_subscriber_options_t", "SubscriberOptions" },
+    .{ "z_loaned_string_array_t", "LoanedStringArray" },
+    .{ "z_loaned_subscriber_t", "LoanedSubscriber" },
+    .{ "z_view_keyexpr_t", "ViewKeyexpr" },
+    .{ "z_segment_id_t", "SegmentId" },
+    .{ "z_chunk_id_t", "ChunkId" },
+
+    .{ "z_string_t", "String" },
+    .{ "z_slice_t", "Slice" },
+
+    .{ "t z_shm_t", "t Shm" },
+    .{ "z_shm_t)", "Shm)" },
+    .{ "z_shm_t,", "Shm," },
+
+    .{ "t z_bytes_t", "t Bytes" },
+    .{ "z_bytes_t)", "Bytes)" },
+    .{ "z_bytes_t,", "Bytes," },
+    .{ "z_bytes_t =", "Bytes =" },
+
+    .{ "t z_alloc_layout_t", "t AllocLayout" },
+    .{ "z_alloc_layout_t)", "AllocLayout)" },
+    .{ "z_alloc_layout_t,", "AllocLayout," },
+
+    .{ "z_shm_mut_t,", "ShmMut," },
+    .{ "t z_shm_mut_t", "t ShmMut" },
+    .{ "z_shm_mut_t)", "ShmMut)" },
+    .{ "z_shm_mut_t =", "ShmMut =" },
+}
