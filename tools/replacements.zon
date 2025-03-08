@@ -444,4 +444,15 @@
     .{ "t z_shm_mut_t", "t ShmMut" },
     .{ "z_shm_mut_t)", "ShmMut)" },
     .{ "z_shm_mut_t =", "ShmMut =" },
+
+    // c pointers
+    .{ "[*c]LoanedConfig", "*LoanedConfig" },
+    .{ "[*c]const LoanedConfig", "*const LoanedConfig" },
+    .{ "[*c]Config", "*Config" },
+    .{ "[*c]const Config", "*const Config" },
+
+    .{ "[*c]LoanedSession", "*LoanedSession" },
+    .{ "[*c]const LoanedSession", "*const LoanedSession" },
+    .{ "[*c]Session", "*Session" },
+    .{ "[*c]const Session", "*const Session" },
 }
