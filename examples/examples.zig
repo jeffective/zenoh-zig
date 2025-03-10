@@ -12,13 +12,11 @@ fn publish() !void {
     );
     defer session.deinit();
 
-    var payload: zenoh.c.Bytes = undefined;
-    _ = zenoh.c.z_bytes_from_static_str(&payload, "value");
+    var bytes = try zenoh.Bytes.initFromStaticString("value");
+    defer bytes.deinit();
 
-    var key_expr: zenoh.c.ViewKeyexpr = undefined;
-    _ = zenoh.c.z_view_keyexpr_from_str(&key_expr, "key/expression");
-
-    _ = zenoh.c.z_put(zenoh.c.z_session_loan_mut(&session._c), zenoh.c.z_view_keyexpr_loan(&key_expr), &payload, null);
+    var options = zenoh.Session.PutOptions.init();
+    try session.put("key/expression", &bytes, &options);
 }
 
 var got_message: bool = false;

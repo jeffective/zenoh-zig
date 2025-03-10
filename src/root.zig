@@ -100,6 +100,49 @@ pub const Session = struct {
 
     // TODO: other zid stuff
 
+    pub const PutOptions = struct {
+        _c: c.PutOptions,
+
+        pub fn init() PutOptions {
+            var c_options: c.PutOptions = undefined;
+            c.z_put_options_default(&c_options);
+            return PutOptions{ ._c = c_options };
+        }
+    };
+
+    pub fn put(self: *const Session, key_expr: [:0]const u8, bytes: *Bytes, options: *PutOptions) Error!void {
+        var view_keyexpr: c.ViewKeyexpr = undefined;
+        try err(c.z_view_keyexpr_from_str(&view_keyexpr, key_expr.ptr));
+
+        try err(c.z_put(
+            c.z_session_loan(&self._c),
+            c.z_view_keyexpr_loan(&view_keyexpr),
+            &bytes._c,
+            &options._c,
+        ));
+    }
+};
+
+pub const Bytes = struct {
+    _c: c.Bytes,
+
+    pub fn initFromStaticString(string: [:0]const u8) Error!Bytes {
+        var c_bytes: c.Bytes = undefined;
+        try err(c.z_bytes_from_static_str(&c_bytes, string.ptr));
+        return Bytes{ ._c = c_bytes };
+    }
+
+    pub fn deinit(self: *Bytes) void {
+        c.z_bytes_drop(&self._c);
+    }
+};
+
+pub const KeyExpr = struct {
+    _c: c.Keyexpr,
+};
+
+pub const ViewKeyExpr = struct {
+    _c: c.ViewKeyexpr,
 };
 
 test "sanity check" {
