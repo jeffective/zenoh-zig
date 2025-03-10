@@ -2,8 +2,6 @@ const std = @import("std");
 
 pub const c = @import("zenoh_c");
 
-// pub const c = @import("c.zig");
-
 pub const Error = error{ZenohError};
 
 pub fn err(code: c.z_result_t) Error!void {
