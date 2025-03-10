@@ -75,6 +75,7 @@ pub fn build(b: *std.Build) void {
         .target = b.resolveTargetQuery(.{ .cpu_arch = .x86_64, .os_tag = .linux, .abi = .musl }),
         .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
     });
+    zenoh.addImport("zenoh_c", translate_c.createModule());
     const gen_tool = b.addExecutable(.{
         .name = "generate_bindings",
         .root_source_file = b.path("tools/generate_bindings.zig"),
