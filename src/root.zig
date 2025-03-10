@@ -4,6 +4,7 @@ pub const c = @import("zenoh_c");
 
 pub const macros = @import("macros.zig");
 const move = macros.move;
+const drop = macros.drop;
 
 pub const Error = error{ZenohError};
 
@@ -41,7 +42,7 @@ pub const Config = struct {
     }
 
     pub fn deinit(self: *Config) void {
-        c.z_config_drop(move(&self._c));
+        drop(move(&self._c));
     }
 };
 
@@ -73,7 +74,7 @@ pub const Session = struct {
     }
 
     pub fn deinit(self: *Session) void {
-        c.z_session_drop(move(&self._c));
+        drop(move(&self._c));
     }
 
     pub const CloseOptions = struct {
@@ -136,7 +137,7 @@ pub const Bytes = struct {
     }
 
     pub fn deinit(self: *Bytes) void {
-        c.z_bytes_drop(move(&self._c));
+        drop(move(&self._c));
     }
 };
 
