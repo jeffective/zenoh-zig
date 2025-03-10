@@ -2,6 +2,9 @@ const std = @import("std");
 
 pub const c = @import("zenoh_c");
 
+pub const macros = @import("macros.zig");
+const move = macros.move;
+
 pub const Error = error{ZenohError};
 
 pub fn err(code: c.z_result_t) Error!void {
@@ -38,7 +41,7 @@ pub const Config = struct {
     }
 
     pub fn deinit(self: *Config) void {
-        c.z_config_drop(c.z_config_move(&self._c));
+        c.z_config_drop(move(&self._c));
     }
 };
 
@@ -65,12 +68,12 @@ pub const Session = struct {
 
     pub fn open(config: *Config, options: *const OpenOptions) Error!Session {
         var c_session: c.z_owned_session_t = undefined;
-        try err(c.z_open(&c_session, c.z_config_move(&config._c), &options._c));
+        try err(c.z_open(&c_session, move(&config._c), &options._c));
         return Session{ ._c = c_session };
     }
 
     pub fn deinit(self: *Session) void {
-        c.z_session_drop(c.z_session_move(&self._c));
+        c.z_session_drop(move(&self._c));
     }
 
     pub const CloseOptions = struct {
@@ -117,7 +120,7 @@ pub const Session = struct {
         try err(c.z_put(
             c.z_session_loan(&self._c),
             c.z_view_keyexpr_loan(&view_keyexpr),
-            c.z_bytes_move(&bytes._c),
+            move(&bytes._c),
             &options._c,
         ));
     }
@@ -133,7 +136,7 @@ pub const Bytes = struct {
     }
 
     pub fn deinit(self: *Bytes) void {
-        c.z_bytes_drop(c.z_bytes_move(&self._c));
+        c.z_bytes_drop(move(&self._c));
     }
 };
 
