@@ -29,18 +29,11 @@ fn data_handler(sample: [*c]zenoh.c.z_loaned_sample_t, arg: ?*anyopaque) callcon
 }
 
 fn subscribe() !void {
-    var config: zenoh.c.z_owned_config_t = undefined;
-    _ = zenoh.c.z_config_default(&config);
-    defer zenoh.c.z_config_drop(zenoh.c.z_config_move(&config));
+    var config = try zenoh.Config.initDefault();
+    defer config.deinit();
 
-    var options: zenoh.c.z_open_options_t = undefined;
-    zenoh.c.z_open_options_default(&options);
-    var session: zenoh.c.z_owned_session_t = undefined;
-    if (zenoh.c.z_open(&session, zenoh.c.z_config_move(&config), &options) != 0) {
-        std.log.err("Failed to open zenoh session.", .{});
-        return error.OpenSessionFailure;
-    }
-    defer zenoh.c.z_session_drop(zenoh.c.z_session_move(&session));
+    var session = try zenoh.Session.open(&config, &zenoh.Session.OpenOptions.init());
+    defer session.deinit();
 
     var callback: zenoh.c.z_owned_closure_sample_t = undefined;
     zenoh.c.z_closure_sample(&callback, &data_handler, null, null);
@@ -51,7 +44,7 @@ fn subscribe() !void {
     var subscriber: zenoh.c.z_owned_subscriber_t = undefined;
 
     if (zenoh.c.z_declare_subscriber(
-        zenoh.c.z_session_loan_mut(&session),
+        zenoh.c.z_session_loan_mut(&session._c),
         &subscriber,
         zenoh.c.z_view_keyexpr_loan(&key_expr),
         zenoh.c.z_closure_sample_move(&callback),
