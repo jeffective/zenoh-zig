@@ -3,22 +3,14 @@ const std = @import("std");
 const zenoh = @import("zenoh");
 
 fn publish() !void {
-    var config: zenoh.c.Config = undefined;
-    _ = zenoh.c.z_config_default(&config);
-    defer zenoh.c.z_config_drop(&config);
+    var config = try zenoh.Config.initDefault();
+    defer config.deinit();
 
-    var options: zenoh.c.OpenOptions = undefined;
-    zenoh.c.z_open_options_default(&options);
-    var session: zenoh.c.Session = undefined;
-    if (zenoh.c.z_open(
-        &session,
+    var session = try zenoh.Session.open(
         &config,
-        &options,
-    ) != 0) {
-        std.log.err("Failed to open zenoh session.", .{});
-        return error.OpenSessionFailure;
-    }
-    defer zenoh.c.z_session_drop(&session);
+        &zenoh.Session.OpenOptions.init(),
+    );
+    defer session.deinit();
 
     var payload: zenoh.c.Bytes = undefined;
     _ = zenoh.c.z_bytes_from_static_str(&payload, "value");
@@ -26,7 +18,7 @@ fn publish() !void {
     var key_expr: zenoh.c.ViewKeyexpr = undefined;
     _ = zenoh.c.z_view_keyexpr_from_str(&key_expr, "key/expression");
 
-    _ = zenoh.c.z_put(zenoh.c.z_session_loan_mut(&session), zenoh.c.z_view_keyexpr_loan(&key_expr), &payload, null);
+    _ = zenoh.c.z_put(zenoh.c.z_session_loan_mut(&session._c), zenoh.c.z_view_keyexpr_loan(&key_expr), &payload, null);
 }
 
 var got_message: bool = false;

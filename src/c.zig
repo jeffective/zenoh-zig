@@ -126,10 +126,10 @@ pub const LoanedSample = extern struct {
 pub const LoanedClosureSample = extern struct {
     _0: [3]usize = @import("std").mem.zeroes([3]usize),
 };
-pub const Id = extern struct {
+pub const ZID = extern struct {
     id: [16]u8 = @import("std").mem.zeroes([16]u8),
 };
-pub const LoanedClosureZid = extern struct {
+pub const LoanedClosureZID = extern struct {
     _0: [3]usize = @import("std").mem.zeroes([3]usize),
 };
 pub const Condvar = extern struct {
@@ -474,9 +474,9 @@ pub const ClosureSample = extern struct {
     _call: ?*const fn ([*c]LoanedSample, ?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn ([*c]LoanedSample, ?*anyopaque) callconv(.c) void),
     _drop: ?*const fn (?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn (?*anyopaque) callconv(.c) void),
 };
-pub const ClosureZid = extern struct {
+pub const ClosureZID = extern struct {
     _context: ?*anyopaque = @import("std").mem.zeroes(?*anyopaque),
-    _call: ?*const fn ([*c]const Id, ?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn ([*c]const Id, ?*anyopaque) callconv(.c) void),
+    _call: ?*const fn ([*c]const ZID, ?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn ([*c]const ZID, ?*anyopaque) callconv(.c) void),
     _drop: ?*const fn (?*anyopaque) callconv(.c) void = @import("std").mem.zeroes(?*const fn (?*anyopaque) callconv(.c) void),
 };
 pub const QueryableOptions = extern struct {
@@ -783,11 +783,11 @@ pub extern fn z_closure_sample_call(closure: [*c]const LoanedClosureSample, samp
 pub extern fn z_closure_sample_drop(closure_: [*c]ClosureSample) void;
 pub extern fn z_closure_sample_loan(closure: [*c]const ClosureSample) [*c]const LoanedClosureSample;
 pub extern fn z_closure_sample_loan_mut(closure: [*c]ClosureSample) [*c]LoanedClosureSample;
-pub extern fn z_closure_zid(this_: [*c]ClosureZid, call: ?*const fn ([*c]const Id, ?*anyopaque) callconv(.c) void, drop: ?*const fn (?*anyopaque) callconv(.c) void, context: ?*anyopaque) void;
-pub extern fn z_closure_zid_call(closure: [*c]const LoanedClosureZid, z_id: [*c]const Id) void;
-pub extern fn z_closure_zid_drop(closure_: [*c]ClosureZid) void;
-pub extern fn z_closure_zid_loan(closure: [*c]const ClosureZid) [*c]const LoanedClosureZid;
-pub extern fn z_closure_zid_loan_mut(closure: [*c]const ClosureZid) [*c]const LoanedClosureZid;
+pub extern fn z_closure_zid(this_: [*c]ClosureZID, call: ?*const fn ([*c]const ZID, ?*anyopaque) callconv(.c) void, drop: ?*const fn (?*anyopaque) callconv(.c) void, context: ?*anyopaque) void;
+pub extern fn z_closure_zid_call(closure: [*c]const LoanedClosureZID, z_id: [*c]const ZID) void;
+pub extern fn z_closure_zid_drop(closure_: [*c]ClosureZID) void;
+pub extern fn z_closure_zid_loan(closure: [*c]const ClosureZID) [*c]const LoanedClosureZID;
+pub extern fn z_closure_zid_loan_mut(closure: [*c]const ClosureZID) [*c]const LoanedClosureZID;
 pub extern fn z_condvar_drop(this_: [*c]Condvar) void;
 pub extern fn z_condvar_init(this_: [*c]Condvar) void;
 pub extern fn z_condvar_loan(this_: [*c]const Condvar) [*c]const LoanedCondvar;
@@ -873,7 +873,7 @@ pub extern fn z_encoding_zenoh_bytes() [*c]const LoanedEncoding;
 pub extern fn z_encoding_zenoh_serialized() [*c]const LoanedEncoding;
 pub extern fn z_encoding_zenoh_string() [*c]const LoanedEncoding;
 pub extern fn z_entity_global_id_eid(this_: [*c]const EntityGlobalId) u32;
-pub extern fn z_entity_global_id_zid(this_: [*c]const EntityGlobalId) Id;
+pub extern fn z_entity_global_id_zid(this_: [*c]const EntityGlobalId) ZID;
 pub extern fn z_fifo_channel_query_new(callback: [*c]ClosureQuery, handler: [*c]FifoHandlerQuery, capacity: usize) void;
 pub extern fn z_fifo_channel_reply_new(callback: [*c]ClosureReply, handler: [*c]FifoHandlerReply, capacity: usize) void;
 pub extern fn z_fifo_channel_sample_new(callback: [*c]ClosureSample, handler: [*c]FifoHandlerSample, capacity: usize) void;
@@ -896,11 +896,11 @@ pub extern fn z_hello_drop(this_: [*c]Hello) void;
 pub extern fn z_hello_loan(this_: [*c]const Hello) [*c]const LoanedHello;
 pub extern fn z_hello_locators(this_: [*c]const LoanedHello, locators_out: [*c]StringArray) void;
 pub extern fn z_hello_whatami(this_: [*c]const LoanedHello) enum_z_whatami_t;
-pub extern fn z_hello_zid(this_: [*c]const LoanedHello) Id;
-pub extern fn z_id_to_string(zid: [*c]const Id, dst: [*c]String) void;
-pub extern fn z_info_peers_zid(session: *const LoanedSession, callback: [*c]ClosureZid) Result;
-pub extern fn z_info_routers_zid(session: *const LoanedSession, callback: [*c]ClosureZid) Result;
-pub extern fn z_info_zid(session: *const LoanedSession) Id;
+pub extern fn z_hello_zid(this_: [*c]const LoanedHello) ZID;
+pub extern fn z_id_to_string(zid: [*c]const ZID, dst: [*c]String) void;
+pub extern fn z_info_peers_zid(session: *const LoanedSession, callback: [*c]ClosureZID) Result;
+pub extern fn z_info_routers_zid(session: *const LoanedSession, callback: [*c]ClosureZID) Result;
+pub extern fn z_info_zid(session: *const LoanedSession) ZID;
 pub extern fn z_internal_alloc_layout_check(this_: [*c]const AllocLayout) bool;
 pub extern fn z_internal_alloc_layout_null(this_: [*c]AllocLayout) void;
 pub extern fn z_internal_bytes_check(this_: [*c]const Bytes) bool;
@@ -919,8 +919,8 @@ pub extern fn z_internal_closure_reply_check(this_: [*c]const ClosureReply) bool
 pub extern fn z_internal_closure_reply_null(this_: [*c]ClosureReply) void;
 pub extern fn z_internal_closure_sample_check(this_: [*c]const ClosureSample) bool;
 pub extern fn z_internal_closure_sample_null(this_: [*c]ClosureSample) void;
-pub extern fn z_internal_closure_zid_check(this_: [*c]const ClosureZid) bool;
-pub extern fn z_internal_closure_zid_null(this_: [*c]ClosureZid) void;
+pub extern fn z_internal_closure_zid_check(this_: [*c]const ClosureZID) bool;
+pub extern fn z_internal_closure_zid_null(this_: [*c]ClosureZID) void;
 pub extern fn z_internal_condvar_check(this_: [*c]const Condvar) bool;
 pub extern fn z_internal_condvar_null(this_: [*c]Condvar) void;
 pub extern fn z_internal_config_check(this_: *const Config) bool;
@@ -1109,7 +1109,7 @@ pub extern fn z_reply_loan(this_: [*c]const Reply) [*c]const LoanedReply;
 pub extern fn z_reply_loan_mut(this_: [*c]Reply) [*c]LoanedReply;
 pub extern fn z_reply_ok(this_: [*c]const LoanedReply) [*c]const LoanedSample;
 pub extern fn z_reply_ok_mut(this_: [*c]LoanedReply) [*c]LoanedSample;
-pub extern fn z_reply_replier_id(this_: [*c]const LoanedReply, out_id: [*c]Id) bool;
+pub extern fn z_reply_replier_id(this_: [*c]const LoanedReply, out_id: [*c]ZID) bool;
 pub extern fn z_ring_channel_query_new(callback: [*c]ClosureQuery, handler: [*c]RingHandlerQuery, capacity: usize) void;
 pub extern fn z_ring_channel_reply_new(callback: [*c]ClosureReply, handler: [*c]RingHandlerReply, capacity: usize) void;
 pub extern fn z_ring_channel_sample_new(callback: [*c]ClosureSample, handler: [*c]RingHandlerSample, capacity: usize) void;
@@ -1236,7 +1236,7 @@ pub extern fn z_time_elapsed_s(time: [*c]const Time) u64;
 pub extern fn z_time_elapsed_us(time: [*c]const Time) u64;
 pub extern fn z_time_now() Time;
 pub extern fn z_time_now_as_str(buf: [*c]const u8, len: usize) [*c]const u8;
-pub extern fn z_timestamp_id(this_: [*c]const Timestamp) Id;
+pub extern fn z_timestamp_id(this_: [*c]const Timestamp) ZID;
 pub extern fn z_timestamp_new(this_: [*c]Timestamp, session: *const LoanedSession) Result;
 pub extern fn z_timestamp_ntp64_time(this_: [*c]const Timestamp) u64;
 pub extern fn z_undeclare_keyexpr(session: *const LoanedSession, key_expr: [*c]Keyexpr) Result;
@@ -1437,7 +1437,7 @@ pub const z_closure_matching_status_callback_t = ?*const fn ([*c]const MatchingS
 pub const z_closure_query_callback_t = ?*const fn ([*c]LoanedQuery, ?*anyopaque) callconv(.c) void;
 pub const z_closure_reply_callback_t = ?*const fn ([*c]LoanedReply, ?*anyopaque) callconv(.c) void;
 pub const z_closure_sample_callback_t = ?*const fn ([*c]LoanedSample, ?*anyopaque) callconv(.c) void;
-pub const z_closure_zid_callback_t = ?*const fn ([*c]const Id, ?*anyopaque) callconv(.c) void;
+pub const z_closure_zid_callback_t = ?*const fn ([*c]const ZID, ?*anyopaque) callconv(.c) void;
 pub const zc_closure_log_callback_t = ?*const fn (zc_log_severity_t, [*c]const LoanedString, ?*anyopaque) callconv(.c) void;
 pub const ze_closure_miss_callback_t = ?*const fn ([*c]const ze_miss_t, ?*anyopaque) callconv(.c) void;
 pub const ZENOH_H = "";
