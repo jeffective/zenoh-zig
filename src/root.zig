@@ -5,6 +5,8 @@ pub const c = @import("zenoh_c");
 pub const macros = @import("macros.zig");
 const move = macros.move;
 const drop = macros.drop;
+const loan = macros.loan;
+const loanMut = macros.loanMut;
 
 pub const Error = error{ZenohError};
 
@@ -88,15 +90,15 @@ pub const Session = struct {
     };
 
     pub fn close(self: *Session, options: *CloseOptions) Error!void {
-        try err(c.z_close(c.z_session_loan_mut(self), &options._c));
+        try err(c.z_close(loanMut(self), &options._c));
     }
 
     pub fn isClosed(self: *const Session) bool {
-        return c.z_session_is_closed(c.z_session_loan(&self._c));
+        return c.z_session_is_closed(loan(&self._c));
     }
 
     pub fn infoZid(self: *const Session) error{InvalidSession}!ZID {
-        const c_zid = c.z_info_zid(c.z_session_loan(&self._c));
+        const c_zid = c.z_info_zid(loan(&self._c));
         const zid = ZID{ ._c = c_zid };
         if (!zid.isValid()) return error.InvalidSession;
         return zid;
@@ -119,8 +121,8 @@ pub const Session = struct {
         try err(c.z_view_keyexpr_from_str(&view_keyexpr, key_expr.ptr));
 
         try err(c.z_put(
-            c.z_session_loan(&self._c),
-            c.z_view_keyexpr_loan(&view_keyexpr),
+            loan(&self._c),
+            loan(&view_keyexpr),
             move(&bytes._c),
             &options._c,
         ));
