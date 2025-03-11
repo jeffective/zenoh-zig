@@ -38,22 +38,15 @@ fn subscribe() !void {
     var callback: zenoh.c.z_owned_closure_sample_t = undefined;
     zenoh.c.z_closure_sample(&callback, &data_handler, null, null);
 
-    var key_expr: zenoh.c.z_view_keyexpr_t = undefined;
-    _ = zenoh.c.z_view_keyexpr_from_str(&key_expr, "key/expression");
+    var closure = zenoh.ClosureSample.init(&data_handler, null, null);
+    defer closure.deinit();
 
-    var subscriber: zenoh.c.z_owned_subscriber_t = undefined;
+    var key_expr = try zenoh.KeyExpr.initFromStr("key/expression");
+    defer key_expr.deinit();
 
-    if (zenoh.c.z_declare_subscriber(
-        zenoh.c.z_session_loan_mut(&session._c),
-        &subscriber,
-        zenoh.c.z_view_keyexpr_loan(&key_expr),
-        zenoh.c.z_closure_sample_move(&callback),
-        null,
-    ) != 0) {
-        std.log.err("Failed to create zenoh subscriber", .{});
-        return error.DeclareSubscriberFailure;
-    }
-    defer zenoh.c.z_subscriber_drop(zenoh.c.z_subscriber_move(&subscriber));
+    var subscriber_options = zenoh.Session.SubscriberOptions.init();
+    var subscriber = try session.declareSubscriber(&key_expr, &closure, &subscriber_options);
+    defer subscriber.deinit();
 
     var timer = std.time.Timer.start() catch @panic("timer unsupported");
 
@@ -69,7 +62,7 @@ fn subscribe() !void {
 
 test "pubsub between two threads" {
     const sub_thread = try std.Thread.spawn(.{ .allocator = null }, subscribe, .{});
-    std.Thread.sleep(std.time.ns_per_s * 1);
+    std.Thread.sleep(std.time.ns_per_s * 0.5);
     const pub_thread = try std.Thread.spawn(.{ .allocator = null }, publish, .{});
 
     sub_thread.join();

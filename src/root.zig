@@ -2,11 +2,11 @@ const std = @import("std");
 
 pub const c = @import("zenoh_c");
 
-pub const macros = @import("macros.zig");
-const move = macros.move;
-const drop = macros.drop;
-const loan = macros.loan;
-const loanMut = macros.loanMut;
+const macros = @import("macros.zig");
+pub const move = macros.move;
+pub const drop = macros.drop;
+pub const loan = macros.loan;
+pub const loanMut = macros.loanMut;
 
 pub const Error = error{ZenohError};
 
@@ -127,6 +127,59 @@ pub const Session = struct {
             &options._c,
         ));
     }
+
+    pub fn declareKeyExpr(self: *const Session, key_expr: *const KeyExpr) Error!KeyExpr {
+        var new_keyexpr: c.z_owned_keyexpr_t = undefined;
+        try err(c.z_declare_keyexpr(loan(&self._c), &new_keyexpr, loan(&key_expr._c)));
+        return KeyExpr{ ._c = new_keyexpr };
+    }
+
+    pub fn undeclareKeyExpr(self: *const Session, key_expr: *KeyExpr) Error!KeyExpr {
+        try err(c.z_undeclare_keyexpr(loan(&self._c), move(&key_expr._c)));
+    }
+
+    pub const SubscriberOptions = struct {
+        _c: c.z_subscriber_options_t,
+
+        pub fn init() SubscriberOptions {
+            var c_options: c.z_subscriber_options_t = undefined;
+            c.z_subscriber_options_default(&c_options);
+            return SubscriberOptions{ ._c = c_options };
+        }
+    };
+
+    pub fn declareSubscriber(self: *const Session, key_expr: *const KeyExpr, closure_sample: *ClosureSample, options: *SubscriberOptions) Error!Subscriber {
+        var c_subsciber: c.z_owned_subscriber_t = undefined;
+        try err(c.z_declare_subscriber(loan(&self._c), &c_subsciber, loan(&key_expr._c), move(&closure_sample._c), &options._c));
+        return Subscriber{ ._c = c_subsciber };
+    }
+};
+
+pub const Sample = struct {};
+
+pub const ClosureSample = struct {
+    _c: c.z_owned_closure_sample_t,
+
+    pub fn init(
+        call: ?*const fn ([*c]c.struct_z_loaned_sample_t, ?*anyopaque) callconv(.c) void,
+        drop_: ?*const fn (?*anyopaque) callconv(.c) void,
+        context: ?*anyopaque,
+    ) ClosureSample {
+        var c_closure_sample: c.z_owned_closure_sample_t = undefined;
+        c.z_closure_sample(&c_closure_sample, call, drop_, context);
+        return ClosureSample{ ._c = c_closure_sample };
+    }
+    pub fn deinit(self: *ClosureSample) void {
+        drop(move(&self._c));
+    }
+};
+
+pub const Subscriber = struct {
+    _c: c.z_owned_subscriber_t,
+
+    pub fn deinit(self: *Subscriber) void {
+        drop(move(&self._c));
+    }
 };
 
 pub const Bytes = struct {
@@ -145,10 +198,32 @@ pub const Bytes = struct {
 
 pub const KeyExpr = struct {
     _c: c.z_owned_keyexpr_t,
+
+    pub fn initFromStr(str: [:0]const u8) Error!KeyExpr {
+        var c_keyexpr: c.z_owned_keyexpr_t = undefined;
+        try err(c.z_keyexpr_from_str(&c_keyexpr, str.ptr));
+        return KeyExpr{ ._c = c_keyexpr };
+    }
+
+    pub fn initFromStrAutoCannonize(str: [:0]const u8) Error!KeyExpr {
+        var c_keyexpr: c.z_owned_keyexpr_t = undefined;
+        try err(c.z_keyexpr_from_str_autocanonize(&c_keyexpr, str.ptr));
+        return KeyExpr{ .c = c_keyexpr };
+    }
+
+    pub fn deinit(self: *KeyExpr) void {
+        drop(move(&self._c));
+    }
 };
 
 pub const ViewKeyExpr = struct {
     _c: c.z_view_keyexpr_t,
+
+    pub fn initFromStr(str: [:0]const u8) Error!ViewKeyExpr {
+        var c_view_keyepr: c.z_view_keyexpr_t = undefined;
+        try err(c.z_view_keyexpr_from_str(&c_view_keyepr, str.ptr));
+        return ViewKeyExpr{ ._c = c_view_keyepr };
+    }
 };
 
 test "sanity check" {

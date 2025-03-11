@@ -180,7 +180,7 @@ pub fn drop(value: anytype) void {
         c.ze_moved_querying_subscriber_t => c.ze_querying_subscriber_drop,
         c.ze_moved_sample_miss_listener_t => c.ze_sample_miss_listener_drop,
         c.ze_moved_serializer_t => c.ze_serializer_drop,
-        else => comptime unreachable,
+        else => @compileError("cannot drop " ++ @typeName(@TypeOf(value))),
     };
     dropper(value);
 }
