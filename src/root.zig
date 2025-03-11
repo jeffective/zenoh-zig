@@ -155,8 +155,6 @@ pub const Session = struct {
     }
 };
 
-pub const Sample = struct {};
-
 pub const ClosureSample = struct {
     _c: c.z_owned_closure_sample_t,
 
@@ -194,6 +192,10 @@ pub const Bytes = struct {
     pub fn deinit(self: *Bytes) void {
         drop(move(&self._c));
     }
+};
+
+pub const String = struct {
+    _c: c.z_owned_string_t,
 };
 
 pub const KeyExpr = struct {

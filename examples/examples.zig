@@ -12,7 +12,7 @@ fn publish() !void {
     );
     defer session.deinit();
 
-    var bytes = try zenoh.Bytes.initFromStaticString("value");
+    var bytes = try zenoh.Bytes.initFromStaticString("hello world");
     defer bytes.deinit();
 
     var options = zenoh.Session.PutOptions.init();
@@ -22,9 +22,14 @@ fn publish() !void {
 var got_message: bool = false;
 
 fn data_handler(sample: [*c]zenoh.c.z_loaned_sample_t, arg: ?*anyopaque) callconv(.c) void {
-    _ = sample;
     _ = arg;
-    std.log.info("Got sample!", .{});
+    const payload = zenoh.c.z_sample_payload(sample);
+    var string: zenoh.c.z_owned_string_t = undefined;
+    _ = zenoh.c.z_bytes_to_string(payload, &string);
+    var slice: []const u8 = undefined;
+    slice.ptr = zenoh.c.z_string_data(zenoh.loan(&string));
+    slice.len = zenoh.c.z_string_len(zenoh.loan(&string));
+    std.log.err("Got sample: {s}", .{slice});
     got_message = true;
 }
 
@@ -62,7 +67,7 @@ fn subscribe() !void {
 
 test "pubsub between two threads" {
     const sub_thread = try std.Thread.spawn(.{ .allocator = null }, subscribe, .{});
-    std.Thread.sleep(std.time.ns_per_s * 0.5);
+    std.Thread.sleep(std.time.ns_per_s * 1);
     const pub_thread = try std.Thread.spawn(.{ .allocator = null }, publish, .{});
 
     sub_thread.join();
