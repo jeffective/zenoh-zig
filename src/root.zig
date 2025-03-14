@@ -165,10 +165,45 @@ pub const ClosureSample = struct {
     ) ClosureSample {
         var c_closure_sample: c.z_owned_closure_sample_t = undefined;
         c.z_closure_sample(&c_closure_sample, call, drop_, context);
-        return ClosureSample{ ._c = c_closure_sample };
+        return .{ ._c = c_closure_sample };
     }
     pub fn deinit(self: *ClosureSample) void {
         drop(move(&self._c));
+    }
+};
+
+pub const Sample = struct {
+    _c: *const c.struct_z_loaned_sample_t,
+
+    pub fn keyExpr(self: *const Sample) [:0]const u8 {
+        const c_key = c.z_sample_keyexpr(self._c);
+        var view_str: c.z_view_string_t = undefined;
+        c.z_keyexpr_as_view_string(c_key, &view_str);
+        return std.mem.span(c.z_string_data(loan(&view_str)));
+    }
+
+    pub fn timestamp(self: *const Sample) ?Timestamp {
+        const c_timestamp = c.z_sample_timestamp(self._c);
+        if (c_timestamp == null) return null;
+        return Timestamp{ ._c = c_timestamp };
+    }
+
+    // pub fn payload(self: *const Sample) []const u8 {
+    //     var c_payload = c.z_sample_payload(&self._c);
+
+    //     c.z_bytes_to_slice(this_: [*c]const struct_z_loaned_bytes_t, dst: [*c]struct_z_owned_slice_t)
+    //     return c_payload.start[0..c_payload.len];
+    // }
+};
+
+pub const Timestamp = struct {
+    _c: *const c.struct_z_timestamp_t,
+
+    pub fn ntp64(self: *const Timestamp) u64 {
+        return c.z_timestamp_ntp64_time(self._c);
+    }
+    pub fn id(self: *const Timestamp) c.z_id_t {
+        return c.z_timestamp_id(self._c);
     }
 };
 

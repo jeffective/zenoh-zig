@@ -29,7 +29,10 @@ fn data_handler(sample: [*c]zenoh.c.z_loaned_sample_t, arg: ?*anyopaque) callcon
     var slice: []const u8 = undefined;
     slice.ptr = zenoh.c.z_string_data(zenoh.loan(&string));
     slice.len = zenoh.c.z_string_len(zenoh.loan(&string));
-    std.log.info("Got sample: {s}", .{slice});
+
+    const sample2 = zenoh.Sample{ ._c = sample };
+
+    std.log.info("Got {s}: {s}", .{ sample2.keyExpr(), slice });
     got_message = true;
 }
 
