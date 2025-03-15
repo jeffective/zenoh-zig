@@ -161,6 +161,7 @@ pub const Session = struct {
     //     call: ?*const fn (ctx: ?*anyopaque, *const Sample) void,
     //     drop_: ?*const fn (ctx: ?*anyopaque) void,
     // ) void {}
+
 };
 
 pub const ClosureSample = struct {
@@ -195,13 +196,6 @@ pub const Sample = struct {
         if (c_timestamp == null) return null;
         return Timestamp{ ._c = c_timestamp };
     }
-
-    // pub fn payload(self: *const Sample) []const u8 {
-    //     var c_payload = c.z_sample_payload(&self._c);
-
-    //     c.z_bytes_to_slice(this_: [*c]const struct_z_loaned_bytes_t, dst: [*c]struct_z_owned_slice_t)
-    //     return c_payload.start[0..c_payload.len];
-    // }
 };
 
 pub const Timestamp = struct {
