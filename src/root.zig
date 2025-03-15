@@ -153,6 +153,14 @@ pub const Session = struct {
         try err(c.z_declare_subscriber(loan(&self._c), &c_subsciber, loan(&key_expr._c), move(&closure_sample._c), &options._c));
         return Subscriber{ ._c = c_subsciber };
     }
+
+    // pub fn declareSubscriber2(
+    //     self: *const Session,
+    //     key_expr: [:0]const u8,
+    //     ctx: ?*anyopaque,
+    //     call: ?*const fn (ctx: ?*anyopaque, *const Sample) void,
+    //     drop_: ?*const fn (ctx: ?*anyopaque) void,
+    // ) void {}
 };
 
 pub const ClosureSample = struct {
