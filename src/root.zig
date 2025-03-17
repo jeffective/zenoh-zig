@@ -156,12 +156,25 @@ pub const Session = struct {
 
     // pub fn declareSubscriber2(
     //     self: *const Session,
-    //     key_expr: [:0]const u8,
-    //     ctx: ?*anyopaque,
-    //     call: ?*const fn (ctx: ?*anyopaque, *const Sample) void,
-    //     drop_: ?*const fn (ctx: ?*anyopaque) void,
-    // ) void {}
+    //     key_expr: *const KeyExpr,
+    //     context: anytype,
+    //     callFn: ?fn (context: @TypeOf(context), *const Sample) void,
+    //     dropFn: ?fn (context: @TypeOf(context)) void,
+    //     options: *SubscriberOptions,
+    // ) !void {
+    //     var c_subscriber: c.z_owned_subscriber_t = undefined;
+    //     var c_closure: c.z_owned_closure_sample_t = undefined;
+    //     c.z_closure_sample(&c_closure, call: ?*const fn([*c]struct_z_loaned_sample_t, ?*anyopaque)callconv(.c)void, drop: ?*const fn(?*anyopaque)callconv(.c)void, context: ?*anyopaque)
+    //     try err(c.z_declare_subscriber(loan(&self._c), &c_subscriber, loan(&key_expr._c), callback: [*c]struct_z_moved_closure_sample_t, &options._c,))
+    // }
+};
 
+pub const Subscriber = struct {
+    _c: c.z_owned_subscriber_t,
+
+    pub fn deinit(self: *Subscriber) void {
+        drop(move(&self._c));
+    }
 };
 
 pub const ClosureSample = struct {
@@ -206,14 +219,6 @@ pub const Timestamp = struct {
     }
     pub fn id(self: *const Timestamp) c.z_id_t {
         return c.z_timestamp_id(self._c);
-    }
-};
-
-pub const Subscriber = struct {
-    _c: c.z_owned_subscriber_t,
-
-    pub fn deinit(self: *Subscriber) void {
-        drop(move(&self._c));
     }
 };
 
