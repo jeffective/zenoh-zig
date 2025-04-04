@@ -66,6 +66,8 @@ pub fn build(b: *std.Build) void {
     });
     examples_tests.root_module.addImport("zenoh", zenoh);
     const run_examples_tests = b.addRunArtifact(examples_tests);
+    const examples_step = b.step("examples", "Run the examples.");
+    examples_step.dependOn(&run_examples_tests.step);
 
     // binding generation
     const translate_c = b.addTranslateC(.{
@@ -75,23 +77,4 @@ pub fn build(b: *std.Build) void {
         .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
     });
     zenoh.addImport("zenoh_c", translate_c.createModule());
-    const gen_tool = b.addExecutable(.{
-        .name = "generate_bindings",
-        .root_source_file = b.path("tools/generate_bindings.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
-    gen_tool.root_module.addAnonymousImport("raw_translate_c", .{ .root_source_file = translate_c.getOutput() });
-
-    const run_gen_tool = b.addRunArtifact(gen_tool);
-    const generated_file = run_gen_tool.addOutputFileArg("c.zig");
-    const update_source = b.addUpdateSourceFiles();
-    update_source.addCopyFileToSource(generated_file, "src/c.zig");
-    const gen_step = b.step("gen", "Generate bindings from the zenoh-c dependency, modifies source files!");
-    gen_step.dependOn(&run_gen_tool.step);
-    gen_step.dependOn(&update_source.step);
-
-    // default step
-    b.default_step.dependOn(test_step);
-    b.default_step.dependOn(&run_examples_tests.step);
 }
