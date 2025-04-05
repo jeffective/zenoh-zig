@@ -73,7 +73,7 @@ pub fn build(b: *std.Build) void {
     const translate_c = b.addTranslateC(.{
         .link_libc = true,
         .optimize = optimize,
-        .target = b.resolveTargetQuery(.{ .cpu_arch = .x86_64, .os_tag = .linux, .abi = .musl }),
+        .target = target,
         .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
     });
     zenoh.addImport("zenoh_c", translate_c.createModule());
