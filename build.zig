@@ -3,12 +3,15 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    // expose a public module called "zenoh"
     const zenoh = b.addModule("zenoh", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
     });
 
+    // download the correct pre-compiled zenoh static library
     const zenoh_c_dep = switch (target.result.cpu.arch) {
         .x86_64 => switch (target.result.os.tag) {
             .windows => switch (target.result.abi) {
@@ -51,14 +54,23 @@ pub fn build(b: *std.Build) void {
         },
         else => @panic("unsupported target"),
     };
+    // expose the functions in the header to zig using translate-c
+    const translate_c = b.addTranslateC(.{
+        .link_libc = true,
+        .optimize = optimize,
+        .target = target,
+        .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
+    });
+    zenoh.addImport("zenoh_c", translate_c.createModule());
 
+    // link the zenoh static library to zig
     zenoh.addObjectFile(zenoh_c_static_lib_path);
-    zenoh.addIncludePath(zenoh_c_dep.path("include"));
 
+    // run some unit tests to sanity check
     const lib_unit_tests = b.addTest(.{
         .root_module = zenoh,
     });
-    lib_unit_tests.linkLibCpp();
+    lib_unit_tests.linkLibC();
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
@@ -74,14 +86,6 @@ pub fn build(b: *std.Build) void {
     const examples_step = b.step("examples", "Run the examples.");
     examples_step.dependOn(&run_examples_tests.step);
 
-    // binding generation
-    const translate_c = b.addTranslateC(.{
-        .link_libc = true,
-        .optimize = optimize,
-        .target = target,
-        .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
-    });
-    zenoh.addImport("zenoh_c", translate_c.createModule());
-
+    // make the default step run the tests
     b.default_step.dependOn(test_step);
 }
