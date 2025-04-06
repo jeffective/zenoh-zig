@@ -45,7 +45,7 @@ pub fn build(b: *std.Build) void {
     const zenoh_c_static_lib_path = switch (target.result.os.tag) {
         .linux, .macos => zenoh_c_dep.path("lib/libzenohc.a"),
         .windows => switch (target.result.abi) {
-            .msvc => zenoh_c_dep.path("lib/zenohc.a"),
+            .msvc => zenoh_c_dep.path("lib/zenohc.lib"),
             .gnu => zenoh_c_dep.path("lib/libzenohc.a"),
             else => @panic("unsupported target"),
         },
