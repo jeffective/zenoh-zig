@@ -43,7 +43,12 @@ pub fn build(b: *std.Build) void {
     } orelse return;
 
     const zenoh_c_static_lib_path = switch (target.result.os.tag) {
-        .linux, .macos, .windows => zenoh_c_dep.path("lib/libzenohc.a"),
+        .linux, .macos => zenoh_c_dep.path("lib/libzenohc.a"),
+        .windows => switch (target.result.abi) {
+            .msvc => zenoh_c_dep.path("lib/zenohc.a"),
+            .gnu => zenoh_c_dep.path("lib/libzenohc.a"),
+            else => @panic("unsupported target"),
+        },
         else => @panic("unsupported target"),
     };
 
@@ -77,4 +82,6 @@ pub fn build(b: *std.Build) void {
         .root_source_file = zenoh_c_dep.path("include/zenoh.h"),
     });
     zenoh.addImport("zenoh_c", translate_c.createModule());
+
+    b.default_step.dependOn(test_step);
 }
