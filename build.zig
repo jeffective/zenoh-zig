@@ -81,6 +81,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    examples_tests.linkLibC();
     examples_tests.root_module.addImport("zenoh", zenoh);
     const run_examples_tests = b.addRunArtifact(examples_tests);
     const examples_step = b.step("examples", "Run the examples.");
