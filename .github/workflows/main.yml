@@ -35,4 +35,4 @@ jobs:
           version: 0.14.0
 
       - name: Build and test Zig Project
-        run: zig build
+        run: zig build -Dtarget=native-native-msvc
