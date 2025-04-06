@@ -71,6 +71,12 @@ pub fn build(b: *std.Build) void {
         .root_module = zenoh,
     });
     lib_unit_tests.linkLibC();
+    if (target.result.abi == .msvc) {
+        lib_unit_tests.linkSystemLibrary("ws2_32");
+        lib_unit_tests.linkSystemLibrary("Iphlpapi");
+        lib_unit_tests.linkSystemLibrary("Advapi32");
+        lib_unit_tests.linkSystemLibrary("Bcrypt");
+    }
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
@@ -82,6 +88,7 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     examples_tests.linkLibC();
+
     examples_tests.root_module.addImport("zenoh", zenoh);
     const run_examples_tests = b.addRunArtifact(examples_tests);
     const examples_step = b.step("examples", "Run the examples.");
