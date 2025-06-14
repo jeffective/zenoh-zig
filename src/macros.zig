@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub const c = @import("zenoh_c");
+const c = @import("zenoh_c");
 
 pub fn Moved(T: type) type {
     const converter = switch (T) {
