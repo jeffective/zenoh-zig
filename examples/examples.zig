@@ -40,7 +40,10 @@ fn subscribe() !void {
     var config = try zenoh.Config.initDefault();
     defer config.deinit();
 
-    var session = try zenoh.Session.open(&config, &zenoh.Session.OpenOptions.init());
+    var session = try zenoh.Session.open(
+        &config,
+        &zenoh.Session.OpenOptions.init(),
+    );
     defer session.deinit();
 
     var callback: zenoh.c.z_owned_closure_sample_t = undefined;
