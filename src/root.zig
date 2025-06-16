@@ -10,7 +10,7 @@ pub const KeyExpr = @import("common.zig").KeyExpr;
 pub const loan = @import("macros.zig").loan;
 pub const loanMut = @import("macros.zig").loanMut;
 pub const move = @import("macros.zig").move;
-pub const Sample = @import("common.zig").Sample;
+pub const Sample = @import("subscription.zig").Sample;
 pub const Session = @import("Session.zig");
 pub const Subscriber = @import("subscription.zig").Subscriber;
 

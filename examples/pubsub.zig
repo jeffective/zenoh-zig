@@ -19,24 +19,20 @@ fn publish() !void {
     try session.put("key/expression", &bytes, &options);
 }
 
-var got_message: bool = false;
-
 fn data_handler(sample: [*c]zenoh.c.z_loaned_sample_t, arg: ?*anyopaque) callconv(.c) void {
-    _ = arg;
+    const event: *std.Thread.ResetEvent = @alignCast(@ptrCast(arg.?));
     const payload = zenoh.c.z_sample_payload(sample);
     var string: zenoh.c.z_owned_string_t = undefined;
     _ = zenoh.c.z_bytes_to_string(payload, &string);
     var slice: []const u8 = undefined;
     slice.ptr = zenoh.c.z_string_data(zenoh.loan(&string));
     slice.len = zenoh.c.z_string_len(zenoh.loan(&string));
-
     const sample2 = zenoh.Sample{ ._c = sample };
-
     std.log.info("Got {s}: {s}", .{ sample2.keyExpr(), slice });
-    got_message = true;
+    event.set();
 }
 
-fn subscribe() !void {
+test "pubsub between two threads" {
     var config = try zenoh.Config.initDefault();
     defer config.deinit();
 
@@ -49,7 +45,8 @@ fn subscribe() !void {
     var callback: zenoh.c.z_owned_closure_sample_t = undefined;
     zenoh.c.z_closure_sample(&callback, &data_handler, null, null);
 
-    var closure = zenoh.ClosureSample.init(&data_handler, null, null);
+    var message_received_event: std.Thread.ResetEvent = .{};
+    var closure = zenoh.ClosureSample.init(&data_handler, null, &message_received_event);
     defer closure.deinit();
 
     var key_expr = try zenoh.KeyExpr.initFromStr("key/expression");
@@ -59,24 +56,8 @@ fn subscribe() !void {
     var subscriber = try session.declareSubscriber(&key_expr, &closure, &subscriber_options);
     defer subscriber.deinit();
 
-    var timer = std.time.Timer.start() catch @panic("timer unsupported");
-
-    while (timer.read() <= std.time.ns_per_s * 10) {
-        if (got_message) {
-            break;
-        }
-        std.Thread.sleep(std.time.ns_per_s * 1);
-    } else {
-        return error.NoMessage;
-    }
-}
-
-test "pubsub between two threads" {
-    const sub_thread = try std.Thread.spawn(.{ .allocator = null }, subscribe, .{});
-    std.Thread.sleep(std.time.ns_per_s * 1);
     const pub_thread = try std.Thread.spawn(.{ .allocator = null }, publish, .{});
+    defer pub_thread.join();
 
-    sub_thread.join();
-    pub_thread.join();
-    try std.testing.expect(got_message);
+    try message_received_event.timedWait(std.time.ns_per_s * 5);
 }

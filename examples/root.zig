@@ -1,4 +1,4 @@
 test {
-    _ = @import("examples.zig");
+    _ = @import("pubsub.zig");
     _ = @import("z_bytes.zig");
 }
