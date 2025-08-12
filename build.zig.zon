@@ -6,44 +6,44 @@
         // linux
         .zenoh_c_aarch64_linux_musl = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-unknown-linux-musl-standalone.zip",
-            .hash = "N-V-__8AANDCBAMzzpBu3aE0GiwOd0LfjGEMstQp2t3go-yp",
+            .hash = "N-V-__8AAJhtEAM1f5_w_rln-ZODgB3lCp_QrtKpSq0xyTLT",
             .lazy = true,
         },
         .zenoh_c_x86_64_linux_musl = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-unknown-linux-musl-standalone.zip",
-            .hash = "N-V-__8AAB-5BgMb6HFMC5l6agfuzpKlJpJkFtk6rl7k6Oie",
+            .hash = "N-V-__8AAPc7EwOTd0EAbl-gzRXCba4taLzaWNiaOYe9m8_E",
             .lazy = true,
         },
         .zenoh_c_aarch64_linux_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-unknown-linux-gnu-standalone.zip",
-            .hash = "N-V-__8AANK4DwNxy9O2AY9HH9UjVsT021uvwaDj-TQqMyqF",
+            .hash = "N-V-__8AACpyGwMhyET_CKZbYOCguFzPwljJ5TdGIZWlzwj0",
             .lazy = true,
         },
         .zenoh_c_x86_64_linux_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-unknown-linux-gnu-standalone.zip",
-            .hash = "N-V-__8AAHmKKQMOgwv6LdIPMNmku0f1BDfvbTUwFkiiet2d",
+            .hash = "N-V-__8AAGn9NQOhIYffDSJN_xACA7Cs8Rklkn7cVxaCOaNp",
             .lazy = true,
         },
         // windows
         .zenoh_c_x86_64_windows_gnu = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-pc-windows-gnu-standalone.zip",
-            .hash = "N-V-__8AAKPpUALWCaNf1Eiib4nfW6DTtmSqJut_prtjA0ge",
+            .hash = "N-V-__8AALKyWgLLl14tnoccWB_rU0bAlkdRWzfL0jvpMM-5",
             .lazy = true,
         },
         .zenoh_c_x86_64_windows_msvc = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-pc-windows-msvc-standalone.zip",
-            .hash = "N-V-__8AAAP7YAKP0bcQ2LHiyv6TJ9DdnuCzXvjP0hPPAGIu",
+            .hash = "N-V-__8AAA0KbAI8q4Vl5k63RQqrevOjJJU_lFXwCQ2vYjlo",
             .lazy = true,
         },
         // macos
         .zenoh_c_aarch64_macos_none = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-apple-darwin-standalone.zip",
-            .hash = "N-V-__8AADWIFQKGOd5hGl3ATAUlQ27C-llahD_xnSPOkOyQ",
+            .hash = "N-V-__8AAEPaHQKefNdOOsdTa99OaipzX0_7iftAdLJoUT9t",
             .lazy = true,
         },
         .zenoh_c_x86_64_macos_none = .{
             .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-apple-darwin-standalone.zip",
-            .hash = "N-V-__8AAAwaOAKyBDpUrkPq4PJZ_nqOfwGZ2CKBQFSSlul3",
+            .hash = "N-V-__8AAOqbQQKjQ96uJ4uM0ABCoz2paykfrJi0g7oy_1Zt",
             .lazy = true,
         },
     },
