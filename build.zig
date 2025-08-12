@@ -86,9 +86,11 @@ pub fn build(b: *std.Build) void {
 
     // examples
     const examples_tests = b.addTest(.{
-        .root_source_file = b.path("examples/root.zig"),
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("examples/root.zig"),
+            .target = target,
+            .optimize = optimize,
+        }),
     });
     examples_tests.root_module.addImport("zenoh", zenoh);
     const run_examples_tests = b.addRunArtifact(examples_tests);
