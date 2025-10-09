@@ -8,6 +8,11 @@
 This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zenoh/zenoh-c).
 
 
+## Zenoh Versions
+
+| This Package Version | Zenoh Version |
+| --- | --- |
+| 0.1.0 | 1.5.0 |
 
 ## How does it work?
 
