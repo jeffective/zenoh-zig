@@ -8,7 +8,7 @@
 This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zenoh/zenoh-c).
 
 
-## Zenoh Versions
+## Zenoh Version
 
 See contents of [build.zig.zon](./build.zig.zon);
 
