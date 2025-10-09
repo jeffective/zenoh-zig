@@ -13,6 +13,7 @@ pub const move = @import("macros.zig").move;
 pub const Sample = @import("subscription.zig").Sample;
 pub const Session = @import("Session.zig");
 pub const Subscriber = @import("subscription.zig").Subscriber;
+pub const AdvancedSubscriber = @import("subscription.zig").AdvancedSubscriber;
 pub const Publisher = @import("publication.zig").Publisher;
 pub const AdvancedPublisher = @import("publication.zig").AdvancedPublisher;
 
