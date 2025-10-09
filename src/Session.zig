@@ -11,6 +11,7 @@ const loan = @import("root.zig").loan;
 const loanMut = @import("root.zig").loanMut;
 const move = @import("root.zig").move;
 const Subscriber = @import("subscription.zig").Subscriber;
+const Publisher = @import("publication.zig").Publisher;
 const ZID = @import("session.zig").ZID;
 
 const Session = @This();
@@ -112,16 +113,22 @@ pub fn declareSubscriber(self: *const Session, key_expr: *const KeyExpr, closure
     return Subscriber{ ._c = c_subsciber };
 }
 
-// pub fn declareSubscriber2(
-//     self: *const Session,
-//     key_expr: *const KeyExpr,
-//     context: anytype,
-//     callFn: ?fn (context: @TypeOf(context), *const Sample) void,
-//     dropFn: ?fn (context: @TypeOf(context)) void,
-//     options: *SubscriberOptions,
-// ) !void {
-//     var c_subscriber: c.z_owned_subscriber_t = undefined;
-//     var c_closure: c.z_owned_closure_sample_t = undefined;
-//     c.z_closure_sample(&c_closure, call: ?*const fn([*c]struct_z_loaned_sample_t, ?*anyopaque)callconv(.c)void, drop: ?*const fn(?*anyopaque)callconv(.c)void, context: ?*anyopaque)
-//     try err(c.z_declare_subscriber(loan(&self._c), &c_subscriber, loan(&key_expr._c), callback: [*c]struct_z_moved_closure_sample_t, &options._c,))
-// }
+pub const PublisherOptions = struct {
+    _c: c.z_publisher_options_t,
+
+    pub fn init() PublisherOptions {
+        var c_options: c.z_publisher_options_t = undefined;
+        c.z_publisher_options_default(&c_options);
+        return PublisherOptions{ ._c = c_options };
+    }
+};
+
+pub fn declarePublisher(
+    self: *const Session,
+    key_expr: *const KeyExpr,
+    options: *PublisherOptions,
+) Error!Publisher {
+    var c_publisher: c.z_owned_publisher_t = undefined;
+    try err(c.z_declare_publisher(loan(&self._c), &c_publisher, loan(&key_expr._c), &options._c));
+    return Publisher{ ._c = c_publisher };
+}

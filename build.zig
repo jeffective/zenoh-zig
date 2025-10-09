@@ -99,4 +99,5 @@ pub fn build(b: *std.Build) void {
 
     // make the default step run the tests
     b.default_step.dependOn(test_step);
+    b.default_step.dependOn(examples_step);
 }

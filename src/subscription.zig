@@ -18,11 +18,14 @@ pub const Subscriber = struct {
 pub const Sample = struct {
     _c: *const c.struct_z_loaned_sample_t,
 
-    pub fn keyExpr(self: *const Sample) [:0]const u8 {
+    pub fn keyExpr(self: *const Sample) []const u8 {
         const c_key = c.z_sample_keyexpr(self._c);
         var view_str: c.z_view_string_t = undefined;
         c.z_keyexpr_as_view_string(c_key, &view_str);
-        return std.mem.span(c.z_string_data(loan(&view_str)));
+        var slice: []const u8 = undefined;
+        slice.ptr = c.z_string_data(loan(&view_str));
+        slice.len = c.z_string_len(loan(&view_str));
+        return slice;
     }
 
     pub fn timestamp(self: *const Sample) ?Timestamp {
