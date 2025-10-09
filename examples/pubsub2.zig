@@ -15,6 +15,9 @@ fn publish() !void {
     var bytes = try zenoh.Bytes.initFromStaticString("hello world");
     defer bytes.deinit();
 
+    var bytes2 = try zenoh.Bytes.init("hello world2");
+    defer bytes2.deinit();
+
     const key_expr: zenoh.KeyExpr = try .initFromStr("key/expression");
     var publisher_options: zenoh.Session.PublisherOptions = .init();
     var publisher = try session.declarePublisher(&key_expr, &publisher_options);
