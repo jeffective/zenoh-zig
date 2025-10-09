@@ -61,3 +61,53 @@ pub const Publisher = struct {
     // TODO: declare background matching listener
 
 };
+
+pub const AdvancedPublisher = struct {
+    _c: c.ze_owned_advanced_publisher_t,
+
+    pub const PutOptions = struct {
+        _c: c.ze_advanced_publisher_put_options_t,
+
+        pub fn init() PutOptions {
+            var c_options: c.ze_advanced_publisher_put_options_t = undefined;
+            c.ze_advanced_publisher_put_options_default(&c_options);
+            return PutOptions{ ._c = c_options };
+        }
+    };
+
+    pub fn put(self: *const AdvancedPublisher, bytes: *Bytes, options: *PutOptions) Error!void {
+        try err(c.ze_advanced_publisher_put(loan(&self._c), move(&bytes._c), &options._c));
+    }
+
+    pub const DeleteOptions = struct {
+        _c: c.ze_advanced_publisher_delete_options_t,
+
+        pub fn init() DeleteOptions {
+            var c_options: c.ze_advanced_publisher_delete_options_t = undefined;
+            c.ze_advanced_publisher_delete_options_default(&c_options);
+            return DeleteOptions{ ._c = c_options };
+        }
+    };
+
+    pub fn delete(self: *const AdvancedPublisher, options: *DeleteOptions) Error!void {
+        try err(c.ze_advanced_publisher_delete(loan(&self._c), &options._c));
+    }
+
+    pub fn id(self: *const AdvancedPublisher) GlobalEntityId {
+        return GlobalEntityId{ ._c = c.ze_advanced_publisher_id(loan(&self._c)) };
+    }
+
+    pub fn keyExpr(self: *const AdvancedPublisher) []const u8 {
+        const c_key = c.ze_advanced_publisher_keyexpr(loan(&self._c));
+        var view_str: c.z_view_string_t = undefined;
+        c.z_keyexpr_as_view_string(c_key, &view_str);
+        var slice: []const u8 = undefined;
+        slice.ptr = c.z_string_data(loan(&view_str));
+        slice.len = c.z_string_len(loan(&view_str));
+        return slice;
+    }
+
+    pub fn deinit(self: *AdvancedPublisher) void {
+        c.ze_advanced_publisher_drop(move(&self._c));
+    }
+};

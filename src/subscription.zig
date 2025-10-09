@@ -15,6 +15,14 @@ pub const Subscriber = struct {
     }
 };
 
+pub const AdvancedSubscriber = struct {
+    _c: c.ze_owned_advanced_subscriber_t,
+
+    pub fn deinit(self: *AdvancedSubscriber) void {
+        drop(move(&self._c));
+    }
+};
+
 pub const Sample = struct {
     _c: *const c.struct_z_loaned_sample_t,
 

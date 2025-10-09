@@ -11,7 +11,9 @@ const loan = @import("root.zig").loan;
 const loanMut = @import("root.zig").loanMut;
 const move = @import("root.zig").move;
 const Subscriber = @import("subscription.zig").Subscriber;
+const AdvancedSubscriber = @import("subscription.zig").AdvancedSubscriber;
 const Publisher = @import("publication.zig").Publisher;
+const AdvancedPublisher = @import("publication.zig").AdvancedPublisher;
 const ZID = @import("session.zig").ZID;
 
 const Session = @This();
@@ -113,6 +115,22 @@ pub fn declareSubscriber(self: *const Session, key_expr: *const KeyExpr, closure
     return Subscriber{ ._c = c_subsciber };
 }
 
+pub const AdvancedSubscriberOptions = struct {
+    _c: c.ze_advanced_subscriber_options_t,
+
+    pub fn init() AdvancedSubscriberOptions {
+        var c_options: c.ze_advanced_subscriber_options_t = undefined;
+        c.ze_advanced_subscriber_options_default(&c_options);
+        return AdvancedSubscriberOptions{ ._c = c_options };
+    }
+};
+
+pub fn declareAdvancedSubscriber(self: *const Session, key_expr: *const KeyExpr, closure_sample: *ClosureSample, options: *AdvancedSubscriberOptions) Error!AdvancedSubscriber {
+    var c_subsciber: c.ze_owned_advanced_subscriber_t = undefined;
+    try err(c.ze_declare_advanced_subscriber(loan(&self._c), &c_subsciber, loan(&key_expr._c), move(&closure_sample._c), &options._c));
+    return AdvancedSubscriber{ ._c = c_subsciber };
+}
+
 pub const PublisherOptions = struct {
     _c: c.z_publisher_options_t,
 
@@ -131,4 +149,24 @@ pub fn declarePublisher(
     var c_publisher: c.z_owned_publisher_t = undefined;
     try err(c.z_declare_publisher(loan(&self._c), &c_publisher, loan(&key_expr._c), &options._c));
     return Publisher{ ._c = c_publisher };
+}
+
+pub const AdvancedPublisherOptions = struct {
+    _c: c.ze_advanced_publisher_options_t,
+
+    pub fn init() AdvancedPublisherOptions {
+        var c_options: c.ze_advanced_publisher_options_t = undefined;
+        c.ze_advanced_publisher_options_default(&c_options);
+        return AdvancedPublisherOptions{ ._c = c_options };
+    }
+};
+
+pub fn declareAdvancedPublisher(
+    self: *const Session,
+    key_expr: *const KeyExpr,
+    options: *AdvancedPublisherOptions,
+) Error!AdvancedPublisher {
+    var c_adv_publisher: c.ze_owned_advanced_publisher_t = undefined;
+    try err(c.ze_declare_advanced_publisher(loan(&self._c), &c_adv_publisher, loan(&key_expr._c), &options._c));
+    return AdvancedPublisher{ ._c = c_adv_publisher };
 }
