@@ -10,9 +10,7 @@ This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zeno
 
 ## Zenoh Versions
 
-| This Package Version | Zenoh Version |
-| --- | --- |
-| 0.1.0 | 1.5.0 |
+See contents of [build.zig.zon](./build.zig.zon);
 
 ## How does it work?
 
@@ -21,10 +19,6 @@ This project provides zig bindings for [zenoh-c](https://github.com/eclipse-zeno
 ## Examples
 
 See [examples](/examples/examples.zig).
-
-## Zenoh-c version
-
-See `version` field of [`build.zig.zon`](/build.zig.zon).
 
 
 ## Development
