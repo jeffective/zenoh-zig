@@ -5,45 +5,45 @@
         // TODO: add more?
         // linux
         .zenoh_c_aarch64_linux_musl = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-unknown-linux-musl-standalone.zip",
-            .hash = "N-V-__8AAJhtEAM1f5_w_rln-ZODgB3lCp_QrtKpSq0xyTLT",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-aarch64-unknown-linux-musl-standalone.zip",
+            .hash = "N-V-__8AAKAmIQP-0SFq6rmAZQI4VSdOm4jqbK0DewkRBlHM",
             .lazy = true,
         },
         .zenoh_c_x86_64_linux_musl = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-unknown-linux-musl-standalone.zip",
-            .hash = "N-V-__8AAPc7EwOTd0EAbl-gzRXCba4taLzaWNiaOYe9m8_E",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-x86_64-unknown-linux-musl-standalone.zip",
+            .hash = "N-V-__8AAF_AJAOfEwh48MQrZORPqmOJYOEFV636e8CI45cy",
             .lazy = true,
         },
         .zenoh_c_aarch64_linux_gnu = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-unknown-linux-gnu-standalone.zip",
-            .hash = "N-V-__8AACpyGwMhyET_CKZbYOCguFzPwljJ5TdGIZWlzwj0",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-aarch64-unknown-linux-gnu-standalone.zip",
+            .hash = "N-V-__8AAHLMLAMhCXnOk7H2IJZAPYL1abnIllmFfrIRpwUj",
             .lazy = true,
         },
         .zenoh_c_x86_64_linux_gnu = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-unknown-linux-gnu-standalone.zip",
-            .hash = "N-V-__8AAGn9NQOhIYffDSJN_xACA7Cs8Rklkn7cVxaCOaNp",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-x86_64-unknown-linux-gnu-standalone.zip",
+            .hash = "N-V-__8AAAmGRwMPfZnrIITwijoZfjDN9kr6VivUrsfkxGzi",
             .lazy = true,
         },
         // windows
         .zenoh_c_x86_64_windows_gnu = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-pc-windows-gnu-standalone.zip",
-            .hash = "N-V-__8AALKyWgLLl14tnoccWB_rU0bAlkdRWzfL0jvpMM-5",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-x86_64-pc-windows-gnu-standalone.zip",
+            .hash = "N-V-__8AACWKagJu9mGbhRUvchN8kuJvaHPCz9EgjhVQBfPt",
             .lazy = true,
         },
         .zenoh_c_x86_64_windows_msvc = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-pc-windows-msvc-standalone.zip",
-            .hash = "N-V-__8AAA0KbAI8q4Vl5k63RQqrevOjJJU_lFXwCQ2vYjlo",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-x86_64-pc-windows-msvc-standalone.zip",
+            .hash = "N-V-__8AAFKJegK3mhnlMbPeJwqv09NEglP6lqi17SQjcHcv",
             .lazy = true,
         },
         // macos
         .zenoh_c_aarch64_macos_none = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-aarch64-apple-darwin-standalone.zip",
-            .hash = "N-V-__8AAEPaHQKefNdOOsdTa99OaipzX0_7iftAdLJoUT9t",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-aarch64-apple-darwin-standalone.zip",
+            .hash = "N-V-__8AAKFHJwJdsTunrWyalkDItix-M_NzbpF6uET_87Mz",
             .lazy = true,
         },
         .zenoh_c_x86_64_macos_none = .{
-            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.5.0/zenoh-c-1.5.0-x86_64-apple-darwin-standalone.zip",
-            .hash = "N-V-__8AAOqbQQKjQ96uJ4uM0ABCoz2paykfrJi0g7oy_1Zt",
+            .url = "https://github.com/eclipse-zenoh/zenoh-c/releases/download/1.6.2/zenoh-c-1.6.2-x86_64-apple-darwin-standalone.zip",
+            .hash = "N-V-__8AAAiESwL-PIxD71-aqudYMaqsVDy2z-0AMPtkhfO6",
             .lazy = true,
         },
     },
